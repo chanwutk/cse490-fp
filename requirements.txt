@@ -1,0 +1,8 @@
+numpy
+tqdm
+pytorch
+torchvision
+scikit-image
+setuptools
+typing
+pytest
