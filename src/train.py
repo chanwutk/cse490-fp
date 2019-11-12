@@ -2,8 +2,10 @@ import time
 import torch
 import pt_util
 import torch.optim as optim
-from flower_network import FlowerNetwork
 import numpy as np
+
+from os import path
+from flower_network import FlowerNetwork
 
 
 # Play around with these constants, you may find a better setting.
@@ -17,7 +19,7 @@ SEED = 0
 PRINT_INTERVAL = 100
 WEIGHT_DECAY = 0.0005
 DATA_PATH = "../data/"
-LOG_PATH = DATA_PATH + "log.pkl"
+LOG_PATH = path.join(DATA_PATH, "log.pkl")
 
 
 def train(model, device, train_loader, optimizer, epoch, log_interval):
@@ -129,7 +131,8 @@ def main():
     kwargs = {"num_workers": 0, "pin_memory": True} if use_cuda else {}
 
     class_names = [
-        line.strip().split(", ") for line in open(DATA_PATH + "class_names.txt")
+        line.strip().split(", ")
+        for line in open(path.join(DATA_PATH, "class_names.txt"))
     ]
     name_to_class = {line[1]: line[0] for line in class_names}
     class_names = [line[1] for line in class_names]
@@ -149,7 +152,7 @@ def main():
         momentum=MOMENTUM,
         weight_decay=WEIGHT_DECAY,
     )
-    start_epoch = model.load_last_model(DATA_PATH + "checkpoints")
+    start_epoch = model.load_last_model(path.join(DATA_PATH, "checkpoints"))
 
     train_losses, test_losses, test_accuracies = pt_util.read_log(
         LOG_PATH, ([], [], [])
@@ -187,7 +190,7 @@ def main():
             test_accuracies.append((epoch, test_accuracy))
             pt_util.write_log(LOG_PATH, (train_losses, test_losses, test_accuracies))
             model.save_best_model(
-                test_accuracy, DATA_PATH + "checkpoints/%03d.pt" % epoch
+                test_accuracy, path.join(DATA_PATH, "checkpoints/%03d.pt") % epoch
             )
 
     except KeyboardInterrupt:
@@ -197,7 +200,7 @@ def main():
 
         traceback.print_exc()
     finally:
-        model.save_model(DATA_PATH + "checkpoints/%03d.pt" % epoch, 0)
+        model.save_model(path.join(DATA_PATH, "checkpoints/%03d.pt") % epoch, 0)
         ep, val = zip(*train_losses)
         pt_util.plot(ep, val, "Train loss", "Epoch", "Error")
         ep, val = zip(*test_losses)

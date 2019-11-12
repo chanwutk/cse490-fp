@@ -1,13 +1,14 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import pt_util
 
 
 class FlowerNetwork(nn.Module):
     def __init__(self, save=True, vis=False):
         super(FlowerNetwork, self).__init__()
-        self.save = save
-        self.vis = vis
+        self.__vis = vis
+        self.__best_accuracy
         # 224 * 224 * 3
         self.c1 = nn.Conv2d(3, 96, kernel_size=11, padding=5, stride=4)
         # 56 * 56 * 96
@@ -52,3 +53,21 @@ class FlowerNetwork(nn.Module):
         x7 = self.act(self.f2(x6))
 
         return F.log_softmax(self.f3(x7), dim=1)
+
+    def loss(self, prediction, label, reduction="elementwise_mean"):
+        loss_val = F.cross_entropy(prediction, label.squeeze(), reduction=reduction)
+        return loss_val
+
+    def save_model(self, file_path, num_to_keep=1):
+        pt_util.save(self, file_path, num_to_keep)
+
+    def save_best_model(self, accuracy, file_path, num_to_keep=1):
+        if self.__best_accuracy is None or self.__best_accuracy < accuracy:
+            self.__best_accuracy = accuracy
+            self.save_model(file_path, num_to_keep)
+
+    def load_model(self, file_path):
+        pt_util.restore(self, file_path)
+
+    def load_last_model(self, dir_path):
+        return pt_util.restore_latest(self, dir_path)
