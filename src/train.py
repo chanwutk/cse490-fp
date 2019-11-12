@@ -2,7 +2,7 @@ from flower_network import FlowerNetwork
 
 
 def train():
-    net = FlowerNetwork(save=False)
+    net = FlowerNetwork(save=True)
     pass
 
 
