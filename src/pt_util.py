@@ -4,13 +4,7 @@ import glob
 import re
 import numpy as np
 import matplotlib.pyplot as plt
-
-try:
-    # For 2.7
-    import cPickle as pickle
-except:
-    # For 3.x
-    import pickle
+import pickle
 
 
 # Define some useful save and restoring functions.
@@ -107,7 +101,7 @@ def restore_latest(net, folder):
         restore(net, checkpoints[-1])
         try:
             start_it = int(re.findall(r"\d+", checkpoints[-1])[-1])
-        except:
+        except Exception:
             pass
     return start_it
 
