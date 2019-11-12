@@ -51,6 +51,4 @@ class FlowerNetwork(nn.Module):
 
         x7 = self.act(self.f2(x6))
 
-        x8 = self.f3(x7)
-
-        return F.log_softmax(x8, dim=1)
+        return F.log_softmax(self.f3(x7), dim=1)
