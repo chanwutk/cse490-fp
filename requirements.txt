@@ -1,8 +1,9 @@
 numpy
-tqdm
-pytorch
-torchvision
+scipy
 scikit-image
-setuptools
-typing
+opencv-python
+tqdm
 pytest
+torch
+torchvision
+h5py
