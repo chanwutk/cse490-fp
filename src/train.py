@@ -6,6 +6,7 @@ import numpy as np
 
 from os import path
 from visualizable_vgg import VisualizableVgg
+from data_augment import data_import
 
 
 # Play around with these constants, you may find a better setting.
@@ -138,6 +139,7 @@ def main():
     class_names = [line[1] for line in class_names]
 
     # TODO: add neew loader!!!
+    data_train, data_test = data_import(DATA_PATH)
     train_loader = torch.utils.data.DataLoader(
         data_train, batch_size=BATCH_SIZE, shuffle=True, **kwargs
     )
