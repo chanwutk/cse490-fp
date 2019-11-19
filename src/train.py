@@ -5,7 +5,7 @@ import torch.optim as optim
 import numpy as np
 
 from os import path
-from flower_network import FlowerNetwork
+from visualizable_vgg import VisualizableVgg
 
 
 # Play around with these constants, you may find a better setting.
@@ -145,7 +145,7 @@ def main():
         data_test, batch_size=TEST_BATCH_SIZE, shuffle=False, **kwargs
     )
 
-    model = FlowerNetwork().to(device)
+    model = VisualizableVgg(visualizable=False).to(device)
     optimizer = optim.SGD(
         model.parameters(),
         lr=LEARNING_RATE,

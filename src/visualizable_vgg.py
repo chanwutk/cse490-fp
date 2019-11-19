@@ -4,16 +4,44 @@ import pt_util
 import torchvision.models as models
 
 
-class VisualizableVgg(nn.Module):
-    def __init__(self, save=True, vis=False):
-        super(VisualizableVgg, self).__init__()
-        self.__vis = vis
-        self.__best_accuracy
-        self.save = save
-        self.vgg = models.vgg16_bn()
+class VisualizableSequential(nn.Sequential):
+    def __init__(self, visualizable=False, *args):
+        super(VisualizableSequential, self).__init__(*args)
+        self.visualizable = visualizable
+        if visualizable:
+            self.visualizations = []
+        else:
+            self.visualizations = None
 
-    def forward(self, x):
-        return self.vgg(x)
+    def forward(self, input):
+        for module in self._modules.values():
+            if self.visualizable:
+                module_input = input.numpy()
+            input = module(input)
+            if self.visualizable:
+                module_output = input.numpy()
+                weight = None
+                if hasattr(module, "weight"):
+                    weight = module.weight.numpy()
+                self.visualizations.append(
+                    (module_input, module_output, str(module), weight)
+                )
+        return input
+
+    def get_visualizations(self):
+        return self.visualizations
+
+
+class VisualizableVgg(nn.Module):
+    def __init__(self, save=True, visualizable=False, batch_norm=True, *args, **kwargs):
+        self.visualizable = visualizable
+        self.save = save
+        self.__best_accuracy
+        self.vgg = models.vgg19_bn()
+        self.vgg.features = VisualizableSequential(self.vgg.features.layer)
+
+    def get_visualizations(self):
+        return self.vgg.features.get_visualizations()
 
     def loss(self, prediction, label, reduction="elementwise_mean"):
         loss_val = F.cross_entropy(prediction, label.squeeze(), reduction=reduction)
