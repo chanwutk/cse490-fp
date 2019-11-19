@@ -139,7 +139,8 @@ def main():
     class_names = [line[1] for line in class_names]
 
     # TODO: add neew loader!!!
-    data_train, data_test = data_import(DATA_PATH)
+    data_train = data_import(path.join(DATA_PATH, 'flowers_train'))
+    data_test = data_import(path.join(DATA_PATH, 'flowers_test'))
     train_loader = torch.utils.data.DataLoader(
         data_train, batch_size=BATCH_SIZE, shuffle=True, **kwargs
     )
@@ -223,5 +224,5 @@ def main():
         )
 
 
-if __name__ == "main":
+if __name__ == "__main__":
     main()

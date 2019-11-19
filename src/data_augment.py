@@ -9,6 +9,5 @@ def data_import(path):
         transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
     ])
 
-    data_train = datasets.ImageFolder(root=path, transform=transform_data)
-    data_test = datasets.ImageFolder(root=path, transform=transform_data)
-    return data_train, data_test
+    data = datasets.ImageFolder(root=path, transform=transform_data)
+    return data
