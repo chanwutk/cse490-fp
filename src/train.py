@@ -19,7 +19,7 @@ USE_CUDA = True
 SEED = 0
 PRINT_INTERVAL = 100
 WEIGHT_DECAY = 0.0005
-DATA_PATH = "../data/"
+DATA_PATH = "./data/"
 LOG_PATH = path.join(DATA_PATH, "log.pkl")
 
 
@@ -61,7 +61,9 @@ def test(model, device, test_loader, return_images=False, log_interval=None):
     gt_values = []
     with torch.no_grad():
         for batch_idx, (data, label) in enumerate(test_loader):
+            print(str(batch_idx) + '/' + str(len(test_loader)))
             data, label = data.to(device), label.to(device)
+            label = label.view(-1, 1)
             output = model(data)
             test_loss_on = model.loss(output, label, reduction="sum").item()
             test_loss += test_loss_on
@@ -135,7 +137,7 @@ def main():
         line.strip().split(", ")
         for line in open(path.join(DATA_PATH, "class_names.txt"))
     ]
-    name_to_class = {line[1]: line[0] for line in class_names}
+    # name_to_class = {line[1]: line[0] for line in class_names}
     class_names = [line[1] for line in class_names]
 
     # TODO: add neew loader!!!

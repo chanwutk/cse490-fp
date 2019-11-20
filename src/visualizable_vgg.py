@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import pt_util
@@ -5,27 +6,27 @@ import torchvision.models as models
 
 
 class VisualizableSequential(nn.Sequential):
-    def __init__(self, visualizable=False, *args):
+    def __init__(self, args, visualizable=False):
         super(VisualizableSequential, self).__init__(*args)
         self.visualizable = visualizable
-        if visualizable:
-            self.visualizations = []
-        else:
-            self.visualizations = None
+        self.visualizations = []
 
     def forward(self, input):
         for module in self._modules.values():
+            # print(module)
+            # print(input.size())
             if self.visualizable:
-                module_input = input.numpy()
+                module_input = input.detach()
             input = module(input)
             if self.visualizable:
-                module_output = input.numpy()
+                module_output = input.detach()
                 weight = None
                 if hasattr(module, "weight"):
-                    weight = module.weight.numpy()
+                    weight = module.weight.detach()
                 self.visualizations.append(
                     (module_input, module_output, str(module), weight)
                 )
+        # print('done sequential')
         return input
 
     def get_visualizations(self):
@@ -34,16 +35,27 @@ class VisualizableSequential(nn.Sequential):
     def set_visualizable(self, visualizable=True):
         if visualizable != self.visualizations:
             self.visualizable = visualizable
-            self.visualizations = [] if visualizable else None
+
+    def __str__(self):
+        return super(VisualizableSequential, self).__str__()
 
 
 class VisualizableVgg(nn.Module):
-    def __init__(self, save=True, visualizable=False, batch_norm=True, *args, **kwargs):
+    def __init__(self, save=True, visualizable=False, batch_norm=True):
+        super(VisualizableVgg, self).__init__()
         self.visualizable = visualizable
         self.save = save
         self.__best_accuracy_saved = None
-        self.vgg = models.vgg19_bn()
-        self.vgg.features = VisualizableSequential(self.vgg.features.layer)
+        if batch_norm:
+            self.vgg = models.vgg19_bn(num_classes=5)
+        else:
+            self.vgg = models.vgg19(num_classes=5)
+        # print(self.vgg.features)
+        self.vgg.features = VisualizableSequential(
+            list(self.vgg.features.modules())[1:]
+        )
+        self.vgg.features.set_visualizable(False)
+        # print(self.vgg.features)
 
     def forward(self, input):
         return self.vgg(input)
