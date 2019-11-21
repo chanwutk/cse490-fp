@@ -5,7 +5,7 @@ import torch.optim as optim
 import numpy as np
 
 from os import path
-from visualizable_vgg import VisualizableVgg
+from visualizable_vgg import VisualizableVgg, VisualizableAlexNet
 from data_augment import data_import
 
 
@@ -17,7 +17,7 @@ LEARNING_RATE = 0.01
 MOMENTUM = 0.9
 USE_CUDA = True
 SEED = 0
-PRINT_INTERVAL = 100
+PRINT_INTERVAL = 2
 WEIGHT_DECAY = 0.0005
 DATA_PATH = "./data/"
 LOG_PATH = path.join(DATA_PATH, "log.pkl")
@@ -61,7 +61,7 @@ def test(model, device, test_loader, return_images=False, log_interval=None):
     gt_values = []
     with torch.no_grad():
         for batch_idx, (data, label) in enumerate(test_loader):
-            print(str(batch_idx) + '/' + str(len(test_loader)))
+            print(str(batch_idx) + "/" + str(len(test_loader)))
             data, label = data.to(device), label.to(device)
             label = label.view(-1, 1)
             output = model(data)
@@ -150,7 +150,7 @@ def main():
         data_test, batch_size=TEST_BATCH_SIZE, shuffle=False, **kwargs
     )
 
-    model = VisualizableVgg(visualizable=False).to(device)
+    model = VisualizableAlexNet(visualizable=False).to(device)
     optimizer = optim.SGD(
         model.parameters(),
         lr=LEARNING_RATE,

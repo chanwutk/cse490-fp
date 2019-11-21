@@ -1,4 +1,3 @@
-import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import pt_util
@@ -12,9 +11,9 @@ class VisualizableSequential(nn.Sequential):
         self.visualizations = []
 
     def forward(self, input):
+        if self.visualizable:
+            self.visualizations = []
         for module in self._modules.values():
-            # print(module)
-            # print(input.size())
             if self.visualizable:
                 module_input = input.detach()
             input = module(input)
@@ -26,41 +25,24 @@ class VisualizableSequential(nn.Sequential):
                 self.visualizations.append(
                     (module_input, module_output, str(module), weight)
                 )
-        # print('done sequential')
         return input
 
     def get_visualizations(self):
         return self.visualizations
 
     def set_visualizable(self, visualizable=True):
-        if visualizable != self.visualizations:
-            self.visualizable = visualizable
+        self.visualizable = visualizable
 
     def __str__(self):
         return super(VisualizableSequential, self).__str__()
 
 
-class VisualizableVgg(nn.Module):
-    def __init__(self, save=True, visualizable=False, batch_norm=True):
-        super(VisualizableVgg, self).__init__()
-        self.visualizable = visualizable
-        self.save = save
+class BaseSaveableNet(nn.Module):
+    def __init__(self):
+        super(BaseSaveableNet, self).__init__()
         self.__best_accuracy_saved = None
-        if batch_norm:
-            self.vgg = models.vgg19_bn(num_classes=5)
-        else:
-            self.vgg = models.vgg19(num_classes=5)
-        # print(self.vgg.features)
-        self.vgg.features = VisualizableSequential(
-            list(self.vgg.features.modules())[1:]
-        )
-        self.vgg.features.set_visualizable(False)
-        # print(self.vgg.features)
 
-    def forward(self, input):
-        return self.vgg(input)
-
-    def loss(self, prediction, label, reduction="elementwise_mean"):
+    def loss(self, prediction, label, reduction="mean"):
         loss_val = F.cross_entropy(prediction, label.squeeze(), reduction=reduction)
         return loss_val
 
@@ -77,6 +59,52 @@ class VisualizableVgg(nn.Module):
 
     def load_last_model(self, dir_path):
         return pt_util.restore_latest(self, dir_path)
+
+
+def make_visualizable_net(net_builder, num_classes, visualizable):
+    net = net_builder(num_classes=num_classes)
+    net.features = VisualizableSequential(list(net.features.modules())[1:])
+    net.features.set_visualizable(visualizable)
+    return net
+
+
+class VisualizableAlexNet(BaseSaveableNet):
+    def __init__(self, visualizable=False, batch_norm=True):
+        super(VisualizableAlexNet, self).__init__()
+        self.visualizable = visualizable
+        self.alexnet = make_visualizable_net(
+            models.alexnet,
+            num_classes=5,
+            visualizable=visualizable
+        )
+
+    def forward(self, input):
+        return self.alexnet(input)
+
+    def load_last_model(self, dir_path):
+        return pt_util.restore_latest(self, dir_path)
+
+    def set_visualizable(self, visualisable=True):
+        if visualisable != self.visualizable:
+            self.visualizable = visualisable
+            self.alexnet.features.set_visualization(visualisable)
+
+    def get_visualizations(self):
+        return self.alexnet.features.get_visualizations()
+
+
+class VisualizableVgg(BaseSaveableNet):
+    def __init__(self, visualizable=False, batch_norm=True):
+        super(VisualizableVgg, self).__init__()
+        self.visualizable = visualizable
+        self.vgg = make_visualizable_net(
+            models.vgg19_bn,
+            num_classes=5,
+            visualizable=visualizable
+        )
+
+    def forward(self, input):
+        return self.vgg(input)
 
     def set_visualizable(self, visualisable=True):
         if visualisable != self.visualizable:
