@@ -5,8 +5,8 @@ import torch.optim as optim
 import numpy as np
 
 from os import path
-from visualizable_vgg import VisualizableVgg, VisualizableAlexNet
-from data_augment import data_import
+from src.visualizable_net import VisualizableAlexNet
+from src.data_augment import data_import
 
 
 # Play around with these constants, you may find a better setting.
@@ -140,9 +140,8 @@ def main():
     # name_to_class = {line[1]: line[0] for line in class_names}
     class_names = [line[1] for line in class_names]
 
-    # TODO: add neew loader!!!
-    data_train = data_import(path.join(DATA_PATH, 'flowers_train'))
-    data_test = data_import(path.join(DATA_PATH, 'flowers_test'))
+    data_train = data_import(path.join(DATA_PATH, "flowers_train"))
+    data_test = data_import(path.join(DATA_PATH, "flowers_test"))
     train_loader = torch.utils.data.DataLoader(
         data_train, batch_size=BATCH_SIZE, shuffle=True, **kwargs
     )
@@ -150,7 +149,7 @@ def main():
         data_test, batch_size=TEST_BATCH_SIZE, shuffle=False, **kwargs
     )
 
-    model = VisualizableAlexNet(visualizable=False).to(device)
+    model = VisualizableAlexNet(num_classes=5, visualizable=False).to(device)
     optimizer = optim.SGD(
         model.parameters(),
         lr=LEARNING_RATE,

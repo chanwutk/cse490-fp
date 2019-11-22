@@ -1,6 +1,6 @@
 import torch.nn as nn
 import torch.nn.functional as F
-import pt_util
+import src.pt_util as pt_util
 import torchvision.models as models
 
 
@@ -69,13 +69,11 @@ def make_visualizable_net(net_builder, num_classes, visualizable):
 
 
 class VisualizableAlexNet(BaseSaveableNet):
-    def __init__(self, visualizable=False, batch_norm=True):
+    def __init__(self, num_classes, visualizable=False):
         super(VisualizableAlexNet, self).__init__()
         self.visualizable = visualizable
         self.alexnet = make_visualizable_net(
-            models.alexnet,
-            num_classes=5,
-            visualizable=visualizable
+            models.alexnet, num_classes=num_classes, visualizable=visualizable
         )
 
     def forward(self, input):
@@ -94,13 +92,11 @@ class VisualizableAlexNet(BaseSaveableNet):
 
 
 class VisualizableVgg(BaseSaveableNet):
-    def __init__(self, visualizable=False, batch_norm=True):
+    def __init__(self, num_classes, visualizable=False):
         super(VisualizableVgg, self).__init__()
         self.visualizable = visualizable
         self.vgg = make_visualizable_net(
-            models.vgg19_bn,
-            num_classes=5,
-            visualizable=visualizable
+            models.vgg19_bn, num_classes=num_classes, visualizable=visualizable
         )
 
     def forward(self, input):
