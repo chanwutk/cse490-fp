@@ -6,7 +6,7 @@ import numpy as np
 
 from os import path
 from src.visualizable_net import VisualizableAlexNet
-from src.data_augment import data_import
+from src.data_loaders import load_dataset, load_classes
 
 
 # Play around with these constants, you may find a better setting.
@@ -133,15 +133,10 @@ def main():
 
     kwargs = {"num_workers": 0, "pin_memory": True} if use_cuda else {}
 
-    class_names = [
-        line.strip().split(", ")
-        for line in open(path.join(DATA_PATH, "class_names.txt"))
-    ]
-    # name_to_class = {line[1]: line[0] for line in class_names}
-    class_names = [line[1] for line in class_names]
+    class_names = load_classes()
 
-    data_train = data_import(path.join(DATA_PATH, "flowers_train"))
-    data_test = data_import(path.join(DATA_PATH, "flowers_test"))
+    data_train = load_dataset(path.join(DATA_PATH, "flowers_train"))
+    data_test = load_dataset(path.join(DATA_PATH, "flowers_test"))
     train_loader = torch.utils.data.DataLoader(
         data_train, batch_size=BATCH_SIZE, shuffle=True, **kwargs
     )

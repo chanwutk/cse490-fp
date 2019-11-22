@@ -42,6 +42,9 @@ class BaseSaveableNet(nn.Module):
         super(BaseSaveableNet, self).__init__()
         self.__best_accuracy_saved = None
 
+    def classify(self, input):
+        return F.softmax(self.forward(input), dim=1)
+
     def loss(self, prediction, label, reduction="mean"):
         loss_val = F.cross_entropy(prediction, label.squeeze(), reduction=reduction)
         return loss_val
@@ -83,9 +86,8 @@ class VisualizableAlexNet(BaseSaveableNet):
         return pt_util.restore_latest(self, dir_path)
 
     def set_visualizable(self, visualisable=True):
-        if visualisable != self.visualizable:
-            self.visualizable = visualisable
-            self.alexnet.features.set_visualization(visualisable)
+        self.visualizable = visualisable
+        self.alexnet.features.set_visualization(visualisable)
 
     def get_visualizations(self):
         return self.alexnet.features.get_visualizations()
