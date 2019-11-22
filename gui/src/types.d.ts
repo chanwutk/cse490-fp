@@ -1,0 +1,1 @@
+type FlowerType = 'Daisy' | 'Dandelion' | 'Rose' | 'Sunflower' | 'Tulip';

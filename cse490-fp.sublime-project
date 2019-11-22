@@ -1,0 +1,11 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"python_interpreter": "/Users/chanwutk/Documents/cse490-fp/env/bin/python3"
+	}
+}

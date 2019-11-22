@@ -1,0 +1,468 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Vis",
+				"VisualizableAlexNet"
+			],
+			[
+				"vis",
+				"visualizations\tstatement"
+			],
+			[
+				"visua",
+				"visualizations\tstatement"
+			],
+			[
+				"Vi",
+				"VisualizableReLU\tclass"
+			],
+			[
+				"visu",
+				"visualizable_layer\tmodule"
+			],
+			[
+				"Ma",
+				"MaxPool2d\tclass"
+			],
+			[
+				"max",
+				"max_pool2d\tstatement"
+			],
+			[
+				"Conv",
+				"Conv2d\tclass"
+			],
+			[
+				"dista",
+				"point_distance\tfloat point_distance(point p, point q)"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				":w",
+				":w - Save"
+			],
+			[
+				":",
+				":$ - EOF"
+			],
+			[
+				"black",
+				"Sublack: Format file"
+			],
+			[
+				"jedi",
+				"SublimeJedi: Find/Rename Usages"
+			],
+			[
+				":e",
+				":e - Revert"
+			],
+			[
+				":W",
+				":w - Save"
+			],
+			[
+				"format",
+				"Sublack: Format file"
+			],
+			[
+				"anaconda",
+				"Anaconda: Set Python interpreter"
+			],
+			[
+				":q",
+				"File: Copy Path Quoted"
+			],
+			[
+				"minima",
+				"View: Toggle Minimap"
+			],
+			[
+				"mini",
+				"View: Toggle Minimap"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"format sele",
+				"Clang Format: Format Selection"
+			],
+			[
+				"format sel",
+				"Clang Format: Select Style"
+			],
+			[
+				"clan format",
+				"Clang Format: Format Selection"
+			],
+			[
+				"black forma",
+				"Sublack: Format file"
+			],
+			[
+				"anaconda ",
+				"Anaconda: Set Python interpreter"
+			],
+			[
+				"clang format",
+				"Clang Format: Format Selection"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"package rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"package install ",
+				"Package Control: Install Package"
+			],
+			[
+				"package install",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: Enable Package"
+			],
+			[
+				"terminal",
+				"Terminal: Open"
+			],
+			[
+				"termina",
+				"Terminal: Open"
+			],
+			[
+				"pack install",
+				"Package Control: Install Package"
+			],
+			[
+				"package remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"termin",
+				"Terminal: Open"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 204.0,
+		"history":
+		[
+			"flake8",
+			"clean",
+			"exit()",
+			"clean",
+			"clear"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/chanwutk/Documents/cse490-fp",
+		"/Users/chanwutk/Documents/cse490-fp/data",
+		"/Users/chanwutk/Documents/cse490-fp/src"
+	],
+	"file_history":
+	[
+		"/Users/chanwutk/Documents/cse490-fp/src/train.py",
+		"/Users/chanwutk/Documents/cse490-fp/src/visualizable_vgg.py",
+		"/Users/chanwutk/Documents/cse490-fp/data/imagenet1000_clsidx_to_labels.txt",
+		"/Users/chanwutk/Documents/cse490-fp/src/pt_util.py",
+		"/Users/chanwutk/Documents/cse490-fp/src/network_visualization.py",
+		"/Users/chanwutk/Documents/cse490-fp/src/nn/__init__.py",
+		"/Users/chanwutk/Documents/cse490-fp/src/nn/visualizable_layer.py",
+		"/Users/chanwutk/Documents/cse490-fp/src/nn/visualizable_relu.py",
+		"/Users/chanwutk/Documents/cse490-fp/src/nn/visualizable_conv2d.py",
+		"/Users/chanwutk/Documents/cse490-fp/src/visualizable_vgg.backup.py",
+		"/Users/chanwutk/Documents/cse490-fp/cse490-fp.sublime-project",
+		"/Users/chanwutk/Library/Application Support/Sublime Text 3/Packages/User/sublime_jedi.sublime-settings",
+		"/Users/chanwutk/Documents/cse490-fp/requirements.txt",
+		"/Users/chanwutk/Documents/dl-class-19au/requirements.txt",
+		"/Users/chanwutk/Library/Application Support/Sublime Text 3/Packages/Jedi - Python autocompletion/Default.sublime-keymap",
+		"/Users/chanwutk/Library/Application Support/Sublime Text 3/Packages/User/Default.sublime-keymap",
+		"/Users/chanwutk/Library/Application Support/Sublime Text 3/Packages/Jedi - Python autocompletion/sublime_jedi.sublime-settings",
+		"/Users/chanwutk/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-mousemap",
+		"/Users/chanwutk/Library/Application Support/Sublime Text 3/Packages/User/Anaconda.sublime-settings",
+		"/Users/chanwutk/Documents/cse490-fp/src/visualizable_conv2d.py",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/zw85/feedback/hw7/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/zw85/hw-pathfinder/src/main/java/pathfinder/ModelConnector.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/zw85/hw-pathfinder/src/main/java/pathfinder/MinimumPaths.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/zw85/hw-pathfinder/src/main/java/pathfinder/datastructures/Path.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/zw85/hw-pathfinder/src/main/java/pathfinder/textInterface/TextInterfaceView.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/zhouyf98/feedback/hw7/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/wenq97/feedback/hw7/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/sgsevier/feedback/hw7/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/pfhgetty/feedback/hw7/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/pdly/feedback/hw7/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/nguyj329/feedback/hw7/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/hbi/feedback/hw7/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/hankt/feedback/hw7/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/daotyl00/feedback/hw7/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/bkassala/feedback/hw7/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/aidang4/feedback/hw7/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/zhouyf98/hw-pathfinder/src/main/java/pathfinder/datastructures/Path.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/zhouyf98/hw-pathfinder/src/main/java/pathfinder/PathSearch.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/zhouyf98/hw-pathfinder/src/main/java/pathfinder/textInterface/TextInterfaceView.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/wenq97/hw-pathfinder/src/main/java/pathfinder/ModelConnector.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/wenq97/hw-pathfinder/src/test/java/pathfinder/implTest/DijkstrasTest.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/wenq97/hw-pathfinder/src/main/java/pathfinder/DijkstrasPathFinder.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/wenq97/hw-pathfinder/src/main/java/pathfinder/datastructures/Path.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/wenq97/hw-pathfinder/src/main/java/pathfinder/textInterface/TextInterfaceView.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/sgsevier/hw-pathfinder/src/main/java/pathfinder/ModelConnector.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/sgsevier/hw-pathfinder/src/main/java/pathfinder/Dijkstra.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/sgsevier/hw-pathfinder/src/main/java/pathfinder/datastructures/Path.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/sgsevier/hw-pathfinder/src/main/java/pathfinder/textInterface/TextInterfaceView.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/pfhgetty/hw-pathfinder/src/main/java/pathfinder/datastructures/Path.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/pfhgetty/hw-pathfinder/src/main/java/pathfinder/ModelConnector.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/pdly/hw-pathfinder/src/test/java/pathfinder/implTest/TestDijkstra.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/pdly/hw-pathfinder/src/main/java/pathfinder/datastructures/Path.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/pdly/hw-pathfinder/src/main/java/pathfinder/Dijkstra.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/pdly/hw-pathfinder/src/main/java/pathfinder/ModelConnector.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/pdly/hw-pathfinder/src/main/java/pathfinder/textInterface/TextInterfaceView.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/nguyj329/hw-pathfinder/src/test/java/pathfinder/implTest/DijkstraTest.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/nguyj329/hw-pathfinder/src/main/java/pathfinder/ModelConnector.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/nguyj329/hw-pathfinder/src/main/java/pathfinder/Dijkstra.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/nguyj329/hw-pathfinder/src/main/java/pathfinder/textInterface/TextInterfaceView.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/nguyj329/hw-pathfinder/src/main/java/pathfinder/datastructures/Path.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/hbi/hw-pathfinder/src/main/java/pathfinder/datastructures/Path.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/hbi/hw-pathfinder/src/main/java/pathfinder/parser/CampusPaths.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/hbi/hw-pathfinder/src/main/java/pathfinder/textInterface/Pathfinder.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/hbi/hw-pathfinder/src/test/java/pathfinder/implTest/CampusPathsTest.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/hbi/hw-pathfinder/src/main/java/pathfinder/ModelConnector.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/hbi/hw-pathfinder/src/main/java/pathfinder/textInterface/TextInterfaceView.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/hankt/hw-pathfinder/src/main/java/pathfinder/ModelConnector.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/hankt/hw-pathfinder/src/main/java/pathfinder/datastructures/Path.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/hankt/hw-pathfinder/src/main/java/pathfinder/textInterface/TextInterfaceView.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/daotyl00/hw-pathfinder/src/main/java/pathfinder/ModelConnector.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/daotyl00/hw-pathfinder/src/main/java/pathfinder/PathCreator.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/daotyl00/hw-pathfinder/src/main/java/pathfinder/datastructures/Path.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/daotyl00/hw-pathfinder/src/main/java/pathfinder/textInterface/TextInterfaceView.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/daotyl00/hw-pathfinder/src/main/java/pathfinder/textInterface/Pathfinder.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/daotyl00/hw-pathfinder/src/main/java/pathfinder/datastructures/Point.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/aidang4/hw-pathfinder/src/test/java/pathfinder/implTest/implTest.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/aidang4/hw-pathfinder/src/test/resources/specTests/directPathWrong.test",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/aidang4/hw-pathfinder/src/main/java/pathfinder/textInterface/TextInterfaceView.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/aidang4/hw-pathfinder/src/main/java/pathfinder/ModelConnector.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/aidang4/hw-pathfinder/src/main/java/pathfinder/Pathfinder.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/aidang4/hw-pathfinder/src/main/java/pathfinder/parser/CampusPathsParser.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/aidang4/hw-pathfinder/src/main/java/pathfinder/parser/CampusPath.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/aidang4/hw-pathfinder/src/main/java/pathfinder/datastructures/Point.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/aidang4/hw-pathfinder/src/main/java/pathfinder/datastructures/Path.java",
+		"/Users/chanwutk/Documents/cse455/src/image.h",
+		"/Users/chanwutk/Documents/cse455/src/test.h",
+		"/Users/chanwutk/Documents/cse455/src/hw5/classifier.c",
+		"/Users/chanwutk/Documents/cse455/src/test.c",
+		"/Users/chanwutk/Documents/cse455/src/matrix.c",
+		"/Users/chanwutk/Documents/cse455/src/matrix.h",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/a947e155-4619-4b0a-9ef7-6cc650b1db2d/cse/courses/cse331/19au/unpack/hw7/group4/aidang4/hw-pathfinder/src/main/java/pathfinder/answers.txt",
+		"/Users/chanwutk/Documents/cse455/Makefile",
+		"/Users/chanwutk/Documents/cse455/tryhw4.py",
+		"/Users/chanwutk/Documents/cse455/src/image_opencv.cpp",
+		"/Users/chanwutk/Documents/cse455/src/hw4/flow_image.c",
+		"/Users/chanwutk/Downloads/lec16-react-overview-code-packaged/src/index.js",
+		"/Users/chanwutk/Downloads/lec16-react-overview-code-packaged/1-html5-button/index.html",
+		"/Users/chanwutk/Downloads/lec16-react-overview-code-packaged/src/4-react-canvas/App.js",
+		"/Users/chanwutk/Downloads/lec16-react-overview-code-packaged/src/3-react-boilerplate/App.js",
+		"/Users/chanwutk/Downloads/lec16-react-overview-code-packaged/public/index.html",
+		"/Users/chanwutk/Documents/cse455/src/load_image.c",
+		"/Users/chanwutk/Documents/dl-class-19au/nn/layers/conv_layer.py",
+		"/Users/chanwutk/Documents/cse455/src/hw0/process_image.c",
+		"/Users/chanwutk/Documents/cse455/src/main.c",
+		"/Users/chanwutk/Documents/cse490-fp/src/main.py",
+		"/Users/chanwutk/Downloads/MarvelPaths-1.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/85d23b90-8158-4889-b1d7-3707bff4cc0b/cse/courses/cse331/19au/unpack/hw6/group3/ludanh/hw-marvel/src/main/java/marvel/MarvelParser.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/85d23b90-8158-4889-b1d7-3707bff4cc0b/cse/courses/cse331/19au/unpack/hw6/group3/ludanh/hw-marvel/src/main/java/marvel/MarvelPaths.java",
+		"/Users/chanwutk/Documents/cse490-fp/src/flower_network.py",
+		"/Users/chanwutk/Library/Application Support/Sublime Text 3/Packages/User/clang_format.sublime-settings",
+		"/Users/chanwutk/Library/Application Support/Sublime Text 3/Packages/User/clang_format_custom.sublime-settings",
+		"/Users/chanwutk/Library/Application Support/Sublime Text 3/Packages/Clang Format/clang_format_custom.sublime-settings",
+		"/Users/chanwutk/Documents/cse455/src/hw2/filter_image.c",
+		"/Users/chanwutk/Documents/cse455/src/hw3/harris_image.c",
+		"/Users/chanwutk/Documents/cse455/lines.jpg",
+		"/Users/chanwutk/Documents/cse455/figs/lines.png",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/85d23b90-8158-4889-b1d7-3707bff4cc0b/cse/courses/cse331/19au/unpack/hw6/group3/zachp99/feedback/hw6/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/85d23b90-8158-4889-b1d7-3707bff4cc0b/cse/courses/cse331/19au/unpack/hw6/group3/zhang21/hw-marvel/src/main/java/marvel/MarvelPaths.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/85d23b90-8158-4889-b1d7-3707bff4cc0b/cse/courses/cse331/19au/unpack/hw6/group3/zhang21/hw-marvel/src/main/java/marvel/MarvelParser.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/85d23b90-8158-4889-b1d7-3707bff4cc0b/cse/courses/cse331/19au/unpack/hw6/group3/zhang21/feedback/hw6/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/85d23b90-8158-4889-b1d7-3707bff4cc0b/cse/courses/cse331/19au/unpack/hw6/group3/zhang21/hw-marvel/src/main/java/marvel/StoreTwo.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/85d23b90-8158-4889-b1d7-3707bff4cc0b/cse/courses/cse331/19au/unpack/hw6/group3/zhang21/hw-marvel/src/main/java/marvel/FileBean.java",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/85d23b90-8158-4889-b1d7-3707bff4cc0b/cse/courses/cse331/19au/unpack/hw6/group3/yadiw/feedback/hw6/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/85d23b90-8158-4889-b1d7-3707bff4cc0b/cse/courses/cse331/19au/unpack/hw6/group3/senkg/feedback/hw6/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/85d23b90-8158-4889-b1d7-3707bff4cc0b/cse/courses/cse331/19au/unpack/hw6/group3/ludanh/feedback/hw6/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/85d23b90-8158-4889-b1d7-3707bff4cc0b/cse/courses/cse331/19au/unpack/hw6/group3/leea98/feedback/hw6/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/85d23b90-8158-4889-b1d7-3707bff4cc0b/cse/courses/cse331/19au/unpack/hw6/group3/kabata/feedback/hw6/feedback.md",
+		"/private/var/folders/d4/hh7kx8d53ls3_dm_3x3ptfbr0000gn/T/85d23b90-8158-4889-b1d7-3707bff4cc0b/cse/courses/cse331/19au/unpack/hw6/group3/joely523/feedback/hw6/feedback.md"
+	],
+	"find":
+	{
+		"height": 29.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"__best_accuracy"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 29.0
+	},
+	"input":
+	{
+		"height": 51.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 334.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "cse490-fp.sublime-project",
+	"replace":
+	{
+		"height": 54.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Documents/cse490-fp/cse490-fp.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 248.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
