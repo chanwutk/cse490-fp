@@ -4,11 +4,15 @@ from src.visualizable_net import VisualizableAlexNet
 from src.data_loaders import load_single_image, load_classes
 from flask import Flask
 
+
+app = Flask(__name__)
+
 cwd = os.getcwd()
 visualizations_dir = os.path.join(cwd, "data/__visualizations__")
-app = Flask(__name__)
+weights_path = os.path.join(cwd, "data/weights.pt")
+
 model = VisualizableAlexNet(num_classes=5, visualizable=True)
-model.load_model(os.path.join(cwd, "data/weights.pt"))
+model.load_model(weights_path)
 class_names = load_classes()
 
 
@@ -31,7 +35,7 @@ def get_vis(layer):
 
 
 if __name__ == "__main__":
-    if (os.path.exists(visualizations_dir)):
+    if os.path.exists(visualizations_dir):
         shutil.rmtree(visualizations_dir)
     os.mkdir(visualizations_dir)
     app.run()
