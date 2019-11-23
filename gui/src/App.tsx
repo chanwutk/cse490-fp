@@ -15,7 +15,6 @@ const rootStyle: CSS.Properties = {
 const bodyStyle: CSS.Properties = {
   minWidth: '800px',
   display: 'flex',
-  // backgroundColor: 'black',  // TODO: will change to whtie
   flexDirection: 'column',
 };
 
