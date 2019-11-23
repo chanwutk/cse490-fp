@@ -19,7 +19,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "prettierbase": "prettier --write src/{,**/,**/**/}*"
+    "prettierbase": "prettier --write src/{,**/,**/**/}*.{ts,tsx}"
   },
   "eslintConfig": {
     "extends": "react-app"
