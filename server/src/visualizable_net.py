@@ -4,42 +4,40 @@ import src.pt_util as pt_util
 import torchvision.models as models
 
 
-class VisualizableSequential(nn.Sequential):
-    def __init__(self, args, visualizable=False):
-        super(VisualizableSequential, self).__init__(*args)
-        self.visualizable = visualizable
-        self.visualizations = []
+class TraceableSequential(nn.Sequential):
+    def __init__(self, args, traceable=False):
+        super(TraceableSequential, self).__init__(*args)
+        self.traceable = traceable
+        self.traces = []
 
     def forward(self, input):
-        if self.visualizable:
-            self.visualizations = []
+        if self.traceable:
+            self.traces = []
         for module in self._modules.values():
-            if self.visualizable:
+            if self.traceable:
                 module_input = input.detach()
             input = module(input)
-            if self.visualizable:
+            if self.traceable:
                 module_output = input.detach()
                 weight = None
                 if hasattr(module, "weight"):
                     weight = module.weight.detach()
-                self.visualizations.append(
-                    (module_input, module_output, str(module), weight)
-                )
+                self.traces.append((module_input, module_output, module, weight))
         return input
 
-    def get_visualizations(self):
-        return self.visualizations
+    def get_traces(self):
+        return self.traces
 
-    def set_visualizable(self, visualizable=True):
-        self.visualizable = visualizable
+    def set_traceable(self, traceable=True):
+        self.traceable = traceable
 
     def __str__(self):
-        return super(VisualizableSequential, self).__str__()
+        return super(TraceableSequential, self).__str__()
 
 
-class BaseSaveableNet(nn.Module):
+class BaseSavableNet(nn.Module):
     def __init__(self):
-        super(BaseSaveableNet, self).__init__()
+        super(BaseSavableNet, self).__init__()
         self.__best_accuracy_saved = None
 
     def classify(self, input):
@@ -64,19 +62,20 @@ class BaseSaveableNet(nn.Module):
         return pt_util.restore_latest(self, dir_path)
 
 
-def make_visualizable_net(net_builder, num_classes, visualizable):
+def make_traceable_net(net_builder, num_classes, traceable):
     net = net_builder(num_classes=num_classes)
-    net.features = VisualizableSequential(list(net.features.modules())[1:])
-    net.features.set_visualizable(visualizable)
+    net.features = TraceableSequential(
+        list(net.features.modules())[1:], traceable=traceable
+    )
     return net
 
 
-class VisualizableAlexNet(BaseSaveableNet):
-    def __init__(self, num_classes, visualizable=False):
-        super(VisualizableAlexNet, self).__init__()
-        self.visualizable = visualizable
-        self.alexnet = make_visualizable_net(
-            models.alexnet, num_classes=num_classes, visualizable=visualizable
+class TraceableAlexNet(BaseSavableNet):
+    def __init__(self, num_classes, traceable=False):
+        super(TraceableAlexNet, self).__init__()
+        self.traceable = traceable
+        self.alexnet = make_traceable_net(
+            models.alexnet, num_classes=num_classes, traceable=traceable
         )
 
     def forward(self, input):
@@ -85,29 +84,28 @@ class VisualizableAlexNet(BaseSaveableNet):
     def load_last_model(self, dir_path):
         return pt_util.restore_latest(self, dir_path)
 
-    def set_visualizable(self, visualisable=True):
-        self.visualizable = visualisable
-        self.alexnet.features.set_visualization(visualisable)
+    def set_traceable(self, traceable=True):
+        self.traceable = traceable
+        self.alexnet.features.set_traceable(traceable)
 
-    def get_visualizations(self):
-        return self.alexnet.features.get_visualizations()
+    def get_traces(self):
+        return self.alexnet.features.get_traces()
 
 
-class VisualizableVgg(BaseSaveableNet):
-    def __init__(self, num_classes, visualizable=False):
-        super(VisualizableVgg, self).__init__()
-        self.visualizable = visualizable
-        self.vgg = make_visualizable_net(
-            models.vgg19_bn, num_classes=num_classes, visualizable=visualizable
+class TraceableVgg(BaseSavableNet):
+    def __init__(self, num_classes, traceable=False):
+        super(TraceableVgg, self).__init__()
+        self.traceable = traceable
+        self.vgg = make_traceable_net(
+            models.vgg19_bn, num_classes=num_classes, traceable=traceable
         )
 
     def forward(self, input):
         return self.vgg(input)
 
-    def set_visualizable(self, visualisable=True):
-        if visualisable != self.visualizable:
-            self.visualizable = visualisable
-            self.vgg.features.set_visualization(visualisable)
+    def set_traceable(self, traceable=True):
+        self.traceable = traceable
+        self.vgg.features.set_traceable(traceable)
 
-    def get_visualizations(self):
-        return self.vgg.features.get_visualizations()
+    def get_traces(self):
+        return self.vgg.features.get_traces()

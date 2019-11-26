@@ -5,7 +5,7 @@ import torch.optim as optim
 import numpy as np
 
 from os import path
-from src.visualizable_net import VisualizableAlexNet
+from src.visualizable_net import TraceableAlexNet
 from src.data_loaders import load_dataset, load_classes
 
 
@@ -144,7 +144,7 @@ def main():
         data_test, batch_size=TEST_BATCH_SIZE, shuffle=False, **kwargs
     )
 
-    model = VisualizableAlexNet(num_classes=5, visualizable=False).to(device)
+    model = TraceableAlexNet(num_classes=5).to(device)
     optimizer = optim.SGD(
         model.parameters(),
         lr=LEARNING_RATE,

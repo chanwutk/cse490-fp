@@ -1,6 +1,9 @@
+import base64
+
 from torchvision import datasets
 from torchvision import transforms
 from PIL import Image
+from io import BytesIO
 
 transform_data = transforms.Compose(
     [
@@ -16,8 +19,8 @@ def load_dataset(image_path: str):
     return data
 
 
-def load_single_image(image_path: str):
-    image = Image.open(image_path)
+def load_single_image(base64_data: str):
+    image = Image.open(BytesIO(base64.b64decode(base64_data)))
     image = transform_data(image).float()
     image = image.unsqueeze(0)
     return image

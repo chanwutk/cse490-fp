@@ -1,42 +1,89 @@
 import React from 'react';
-import { isArray } from 'util';
+import {
+  makeRequest,
+  parseNetworkLayout,
+  isTensorInfo,
+  CANVAS_WIDTH_RANGE,
+  CANVAS_MIN_WIDTH,
+  CANVAS_HEIGHT_RANGE,
+  CANVAS_MIN_HEIGHT,
+  isConvolutionalLayerInfo,
+  isActivationLayerInfo,
+} from '../utils';
+import TensorVisualization from './TensorVisualization';
+import ActivationVisualization from './ActivationVisualization';
+import Conv2dVisualization from './Conv2dVisualization';
 
-interface INetworkVisualizationProps {
+interface NetworkVisualizationProps {
   imageData?: string;
-  onClassified: (flowerType: FlowerType) => void;
+  onClassified: (output: string) => void;
 }
 
-interface INetworkVisualizationState {}
+interface NetworkVisualizationState {
+  visInfo: VisualizationInfo[];
+}
 
-const makeRequest = async (
-  option: string,
-  callback: (context: string) => void,
-  init?: RequestInit | undefined
-) => {
-  try {
-    const response = await fetch(`${SERVER_URL}${option}`, init);
+export const makeVisualization = (layers: VisualizationInfo[]) => {
+  let maxWidth = Number.MIN_VALUE,
+    minWidth = Number.MAX_VALUE;
+  let maxChannel = Number.MIN_VALUE,
+    minChannel = Number.MAX_VALUE;
 
-    if (!response.ok) {
-      alert('Problem communicating to the server: ' + response.status);
-      return;
+  for (const layer in layers) {
+    if (isTensorInfo(layer)) {
+      const { width, channel } = layer;
+      maxWidth = Math.max(width, maxWidth);
+      minWidth = Math.min(width, minWidth);
+      maxChannel = Math.max(channel, maxChannel);
+      minChannel = Math.min(channel, minChannel);
     }
-
-    const context = await response.text();
-    callback(context);
-  } catch (e) {
-    alert('Unexpected error: ' + e);
   }
+
+  const widthScale = CANVAS_WIDTH_RANGE / (maxWidth - minWidth);
+  const scaleWidth = (width: number) =>
+    (width - minWidth) * widthScale + CANVAS_MIN_WIDTH;
+
+  const heightScale = CANVAS_HEIGHT_RANGE / (maxChannel - minChannel);
+  const scaleHeight = (channel: number) =>
+    (channel - minChannel) * heightScale + CANVAS_MIN_HEIGHT;
+
+  let idx = 0;
+  return layers.map(layer => {
+    if (isTensorInfo(layer)) {
+      return (
+        <TensorVisualization
+          info={layer}
+          width={scaleWidth(layer.width)}
+          height={scaleHeight(layer.channel)}
+        />
+      );
+    } else if (isConvolutionalLayerInfo(layer)) {
+      if (layer.type === 'Conv2d') {
+        return <Conv2dVisualization info={layer} width={0} idx={idx++} />;
+      } else if (layer.type === 'MaxPool2d') {
+      } else {
+        throw new Error('Unexpected layer: ' + layer);
+      }
+      return 0;
+    } else if (isActivationLayerInfo(layer)) {
+      return <ActivationVisualization info={layer} idx={idx++} />;
+    } else {
+      throw new Error('Unexpected layer: ' + layer);
+    }
+  });
 };
 
 class NetworkVisualization extends React.Component<
-  INetworkVisualizationProps,
-  INetworkVisualizationState
+  NetworkVisualizationProps,
+  NetworkVisualizationState
 > {
-  state: INetworkVisualizationState = {};
+  state: NetworkVisualizationState = {
+    visInfo: [],
+  };
 
   componentDidUpdate = (
-    prevProps: INetworkVisualizationProps,
-    _prevState: INetworkVisualizationState
+    prevProps: NetworkVisualizationProps,
+    _prevState: NetworkVisualizationState
   ) => {
     if (
       prevProps.imageData !== this.props.imageData &&
@@ -47,36 +94,21 @@ class NetworkVisualization extends React.Component<
   };
 
   classify = async (data: string) => {
-    const callback = (context: string) => {
-      if (isFlowerType(context)) {
-        this.props.onClassified(context);
-      } else {
-        alert('Unexpected response from the server: ' + context);
-      }
-    };
+    const callback = (context: string) => context;
     const init = {
       method: 'POST',
       headers: {
-        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ data }),
     };
-    makeRequest('classify', callback, init);
-
-    makeRequest('network-layout', (context: string) => {
-      const parsed = JSON.parse(context);
-      if (isArray(parsed)) {
-        for (const { type, info } of parsed) {
-          if (type === 'Conv2d') {
-            const { inputDim, outputDim, kernelSize, stride } = info;
-          } else if (type === 'Maxpool2d') {
-            const { kernelSize, stride } = info;
-          } else {
-          }
-        }
-      }
-    });
+    const output = await makeRequest('classify', callback, init);
+    await makeRequest('network-layout', (context: string) =>
+      this.setState({
+        visInfo: parseNetworkLayout(context),
+      })
+    );
+    this.props.onClassified(output);
   };
 
   render() {

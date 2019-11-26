@@ -1,17 +1,17 @@
-import React from "react";
-import { Button } from "@material-ui/core";
+import React from 'react';
+import { Button } from '@material-ui/core';
 
-interface IUploadButtonProps {
+interface UploadButtonProps {
   onClick: (event: any) => void;
   isActive: boolean;
 }
 
-const UploadButton: React.FC<IUploadButtonProps> = ({ onClick, isActive }) => {
+const UploadButton: React.FC<UploadButtonProps> = ({ onClick, isActive }) => {
   return (
     <div>
       <input
         accept="image/*"
-        style={{ display: "none" }}
+        style={{ display: 'none' }}
         id="icon-button-photo"
         onChange={onClick}
         type="file"

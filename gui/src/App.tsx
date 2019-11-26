@@ -3,6 +3,7 @@ import './App.css';
 import CSS from 'csstype';
 import NetworkVisualization from './components/NetworkVisualization';
 import UploadButton from './components/UploadButton';
+import { CANVAS_MAX_WIDTH } from './utils';
 
 const rootStyle: CSS.Properties = {
   width: '100%',
@@ -13,7 +14,7 @@ const rootStyle: CSS.Properties = {
 };
 
 const bodyStyle: CSS.Properties = {
-  minWidth: '800px',
+  minWidth: CANVAS_MAX_WIDTH + 'px',
   display: 'flex',
   flexDirection: 'column',
 };
@@ -22,16 +23,16 @@ const h1Style: CSS.Properties = {
   fontSize: '40px',
 };
 
-interface IAppProps {}
+interface AppProps {}
 
-interface IAppState {
+interface AppState {
   imageData?: string;
-  output: null | FlowerType;
+  output: null | string;
   isUploadButtonActive: boolean;
 }
 
-class App extends React.Component<IAppProps, IAppState> {
-  state: IAppState = {
+class App extends React.Component<AppProps, AppState> {
+  state: AppState = {
     output: null,
     isUploadButtonActive: true,
   };
@@ -46,17 +47,20 @@ class App extends React.Component<IAppProps, IAppState> {
     image.src = src;
     image.onload = () => {
       const ctx = canvas.getContext('2d')!;
-      ctx.drawImage(image, 0, 0, 500, 500);
-      this.setState({
-        imageData: canvas.toDataURL(),
-        isUploadButtonActive: false,
-      });
+      ctx.drawImage(image, 0, 0, 224, 224);
+      const imageData = canvas.toDataURL('image/jpeg');
+      if (imageData !== this.state.imageData) {
+        this.setState({
+          imageData: canvas.toDataURL('image/jpeg'),
+          isUploadButtonActive: false,
+        });
+      }
     };
   };
 
-  handleClassified = (flowerType: FlowerType) => {
+  handleClassified = (output: string) => {
     this.setState({
-      output: flowerType,
+      output,
       isUploadButtonActive: true,
     });
   };
@@ -69,10 +73,10 @@ class App extends React.Component<IAppProps, IAppState> {
           <h1 style={h1Style}>What makes a flower its kind?</h1>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <canvas
-              width="500px"
-              height="500px"
+              width="224px"
+              height="224px"
               ref={this.canvasRef}
-              style={{ width: 500, height: 500 }}
+              style={{ borderStyle: 'dotted' }}
             />
           </div>
           <div
