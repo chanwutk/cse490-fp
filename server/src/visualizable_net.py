@@ -10,20 +10,21 @@ class TraceableSequential(nn.Sequential):
         self.traceable = traceable
         self.traces = []
 
-    def forward(self, input):
+    def forward(self, input_tensor):
         if self.traceable:
             self.traces = []
         for module in self._modules.values():
+            module_input = None
             if self.traceable:
-                module_input = input.detach()
-            input = module(input)
+                module_input = input_tensor.detach()
+            input_tensor = module(input_tensor)
             if self.traceable:
-                module_output = input.detach()
+                module_output = input_tensor.detach()
                 weight = None
                 if hasattr(module, "weight"):
                     weight = module.weight.detach()
                 self.traces.append((module_input, module_output, module, weight))
-        return input
+        return input_tensor
 
     def get_traces(self):
         return self.traces
@@ -40,8 +41,8 @@ class BaseSavableNet(nn.Module):
         super(BaseSavableNet, self).__init__()
         self.__best_accuracy_saved = None
 
-    def classify(self, input):
-        return F.softmax(self.forward(input), dim=1)
+    def classify(self, input_tensor):
+        return F.softmax(self.forward(input_tensor), dim=1)
 
     def loss(self, prediction, label, reduction="mean"):
         loss_val = F.cross_entropy(prediction, label.squeeze(), reduction=reduction)
@@ -78,8 +79,8 @@ class TraceableAlexNet(BaseSavableNet):
             models.alexnet, num_classes=num_classes, traceable=traceable
         )
 
-    def forward(self, input):
-        return self.alexnet(input)
+    def forward(self, input_tensor):
+        return self.alexnet(input_tensor)
 
     def load_last_model(self, dir_path):
         return pt_util.restore_latest(self, dir_path)
@@ -100,8 +101,8 @@ class TraceableVgg(BaseSavableNet):
             models.vgg19_bn, num_classes=num_classes, traceable=traceable
         )
 
-    def forward(self, input):
-        return self.vgg(input)
+    def forward(self, input_tensor):
+        return self.vgg(input_tensor)
 
     def set_traceable(self, traceable=True):
         self.traceable = traceable
