@@ -2,14 +2,14 @@ interface LayerInfo {
   readonly type: string;
 }
 
-interface ConvolutionalLayerInfo extends LayerInfo {
+interface ConvolutionLayerInfo extends LayerInfo {
   readonly kernelSize: number;
   readonly inputDim: number;
   readonly outputDim: number;
   readonly stride: number;
 }
 
-interface MaxPoolLayerInfo extends LayerInfo {
+interface MaxPool2dLayerInfo extends LayerInfo {
   readonly kernelSize: number;
   readonly stride: number;
 }

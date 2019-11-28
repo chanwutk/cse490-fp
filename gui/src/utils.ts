@@ -3,9 +3,9 @@ import { isArray } from 'util';
 export const SERVER_PORT = 5432;
 export const SERVER_URL = `http://127.0.0.1:${SERVER_PORT}/`;
 export const CANVAS_MAX_WIDTH = 800;
-export const CANVAS_MIN_WIDTH = 100;
+export const CANVAS_MIN_WIDTH = 120;
 export const CANVAS_WIDTH_RANGE = CANVAS_MAX_WIDTH - CANVAS_MIN_WIDTH;
-export const CANVAS_MAX_HEIGHT = 400;
+export const CANVAS_MAX_HEIGHT = 300;
 export const CANVAS_MIN_HEIGHT = 50;
 export const CANVAS_HEIGHT_RANGE = CANVAS_MAX_HEIGHT - CANVAS_MIN_HEIGHT;
 
@@ -22,9 +22,7 @@ export const isLayerInfo = (x: any): x is LayerInfo => {
   return x.type !== undefined;
 };
 
-export const isConvolutionalLayerInfo = (
-  x: any
-): x is ConvolutionalLayerInfo => {
+export const isConvolutionLayerInfo = (x: any): x is ConvolutionLayerInfo => {
   if (x.type && x.type === 'Conv2d') {
     return (
       x.inputDim !== undefined &&
@@ -35,7 +33,7 @@ export const isConvolutionalLayerInfo = (
   }
   return false;
 };
-export const isMaxPoolLayerInfo = (x: any): x is MaxPoolLayerInfo => {
+export const isMaxPoolLayerInfo = (x: any): x is MaxPool2dLayerInfo => {
   if (x.type && x.type === 'MaxPool2d') {
     return x.stride !== undefined && x.kernelSize !== undefined;
   }
@@ -80,7 +78,7 @@ export const parseNetworkLayout = (text: string) => {
     for (const layer of parsed) {
       let nextTensorInfo: TensorInfo;
 
-      if (isConvolutionalLayerInfo(layer)) {
+      if (isConvolutionLayerInfo(layer)) {
         const nextWidth = ~~(prevTensorInfo.width / layer.stride);
         const nextHeight = ~~(prevTensorInfo.height / layer.stride);
         if (prevTensorInfo.channel !== layer.inputDim) {
@@ -121,4 +119,34 @@ export const getBufferFromBytes = (imageBytes: number[]): Buffer => {
     imageBuffer[b] = imageBytes[b];
   }
   return imageBuffer;
+};
+
+export const getLayersScalers = (layers: VisualizationInfo[]) => {
+  let maxWidth = Number.MIN_VALUE,
+    minWidth = Number.MAX_VALUE;
+  let maxChannel = Number.MIN_VALUE,
+    minChannel = Number.MAX_VALUE;
+
+  for (const layer of layers) {
+    if (isTensorInfo(layer)) {
+      const { width, channel } = layer;
+      maxWidth = Math.max(width, maxWidth);
+      minWidth = Math.min(width, minWidth);
+      maxChannel = Math.max(channel, maxChannel);
+      minChannel = Math.min(channel, minChannel);
+    }
+  }
+
+  const widthScale = CANVAS_WIDTH_RANGE / (maxWidth - minWidth);
+  const scaleWidth = (width: number) =>
+    (width - minWidth) * widthScale + CANVAS_MIN_WIDTH;
+
+  const heightScale = CANVAS_HEIGHT_RANGE / (maxChannel - minChannel);
+  const scaleHeight = (channel: number) =>
+    (channel - minChannel) * heightScale + CANVAS_MIN_HEIGHT;
+
+  return {
+    scaleWidth,
+    scaleHeight,
+  };
 };

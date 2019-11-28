@@ -9,7 +9,6 @@ interface ActivationVisualizationProps {
 interface ActivationVisualizationState {
   isReady: boolean;
   input?: any;
-  weight?: any;
   output?: any;
 }
 

@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -19,4 +19,22 @@
 
 .App-link {
   color: #09d3ac;
+} */
+
+.root {
+  width: '100%';
+  position: 'absolute';
+  display: 'flex';
+  justify-content: 'center';
+  background-color: 'black';
+  align-items: 'center';
+}
+
+.body {
+  display: 'flex';
+  flex-direction: 'column';
+}
+
+h1 {
+  font-size: '40px';
 }

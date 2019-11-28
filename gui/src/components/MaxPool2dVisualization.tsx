@@ -1,27 +1,25 @@
 import React from 'react';
 import { makeRequest } from '../utils';
 
-interface Conv2dVisualizationProps {
-  info: ConvolutionalLayerInfo;
-  width: number;
+interface MaxPool2dVisualizationProps {
+  info: MaxPool2dLayerInfo;
   idx: number;
 }
 
-interface Conv2dVisualizationState {
+interface MaxPool2dVisualizationState {
   isReady: boolean;
   input?: any;
-  weight?: any;
   output?: any;
 }
 
-class Conv2dVisualization extends React.Component<
-  Conv2dVisualizationProps,
-  Conv2dVisualizationState
+class MaxPool2dVisualization extends React.Component<
+  MaxPool2dVisualizationProps,
+  MaxPool2dVisualizationState
 > {
-  state: Conv2dVisualizationState = { isReady: true };
+  state: MaxPool2dVisualizationState = { isReady: true };
   canvas: React.RefObject<HTMLCanvasElement>;
 
-  constructor(props: Conv2dVisualizationProps) {
+  constructor(props: MaxPool2dVisualizationProps) {
     super(props);
     this.canvas = React.createRef();
   }
@@ -29,9 +27,8 @@ class Conv2dVisualization extends React.Component<
   onClick = async () => {
     if (!this.state.isReady) {
       // TODO: request to server all the info
-      await makeRequest(`trace/${this.props.idx}`, (context: string) => {
-        // TODO: parse context to the representation of the tensor
-      });
+      const result = await makeRequest(`trace/${this.props.idx}`, JSON.parse);
+      console.log(result);
       this.setState({
         isReady: true,
       });
@@ -48,4 +45,4 @@ class Conv2dVisualization extends React.Component<
   }
 }
 
-export default Conv2dVisualization;
+export default MaxPool2dVisualization;

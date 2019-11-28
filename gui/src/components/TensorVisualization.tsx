@@ -13,8 +13,17 @@ const TensorVisualization: React.FC<TensorVisualizationProps> = ({
 }) => {
   return (
     <div
-      style={{ width, height, textAlign: 'center' }}
-    >{`${info.width} x ${info.height} x ${info.channel}`}</div>
+      style={{
+        width,
+        height,
+        textAlign: 'center',
+        verticalAlign: 'middle',
+        lineHeight: height + 'px',
+        backgroundColor: 'lightgrey',
+      }}
+    >
+      {`${info.width} x ${info.height} x ${info.channel}`}
+    </div>
   );
 };
 

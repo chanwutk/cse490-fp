@@ -18,7 +18,7 @@ cors = CORS(
     resources={
         r"/classify": {"origins": "*"},
         r"/network-layout": {"origins": "*"},
-        r"/trace/": {"origins": "*"},
+        r"/trace": {"origins": "*"},
     },
 )
 
@@ -45,15 +45,21 @@ def classify():
 
 
 @app.route("/trace/<int:layer_idx>", methods=["GET"])
+@cross_origin(origin="localhost", headers=["Content-Type"])
 def get_vis(layer_idx: int):
-    input_tensor, output_tensor, layer, weights = model.get_traces()[layer_idx]
-    return jsonify(
-        {
-            "input": tensor_to_base64s(input_tensor),
-            "output": tensor_to_base64s(output_tensor),
-            "weights": weights_to_base64s(weights),
-        }
-    )
+    traces = model.get_traces()
+    if len(traces) <= layer_idx:
+        return "index out of bound for traces", 500
+
+    input_tensor, output_tensor, layer, weights = traces[layer_idx]
+    output = {
+        "input": tensor_to_base64s(input_tensor),
+        "output": tensor_to_base64s(output_tensor),
+    }
+    if weights is not None:
+        output["weights"] = weights_to_base64s(weights)
+
+    return jsonify(output)
 
 
 @app.route("/network-layout", methods=["GET"])
@@ -66,7 +72,4 @@ if __name__ == "__main__":
     if os.path.exists(visualizations_dir):
         shutil.rmtree(visualizations_dir)
     os.mkdir(visualizations_dir)
-    f = open(os.path.join(REACT_DATA_DIR, "test.txt"), "w")
-    f.write("Now the file has more content!")
-    f.close()
     app.run(port=5432)
