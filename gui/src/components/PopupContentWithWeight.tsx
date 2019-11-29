@@ -2,11 +2,12 @@ import React from 'react';
 import { Fab } from '@material-ui/core';
 import { ArrowUpward, ArrowDownward } from '@material-ui/icons';
 import { writeBase64ToCanvas } from '../utils';
+import TensorCanvas from './TensorCanvas';
 
 interface PopupContentWithWeightProps {
-  input: any[];
-  output: any[];
-  weights: any[][];
+  input: string[];
+  output: string[];
+  weights: string[][];
   isOpen: boolean;
   info: LayerInfo;
 }
@@ -115,12 +116,7 @@ class PopupContentWithWeight extends React.Component<
         >
           <ArrowUpward />
         </Fab>
-        <canvas
-          ref={this[ref]}
-          width="300"
-          height="300"
-          style={{ margin: '30px' }}
-        />
+        <TensorCanvas reference={this[ref]} size={300} margin={30} />
         <Fab
           disabled={this.state[field] >= this.props[tensor].length - 1}
           onClick={this.changeIndexFactory(tensor, 1)}
@@ -145,12 +141,7 @@ class PopupContentWithWeight extends React.Component<
           }}
         >
           {`Kernel[${this.state.inputIdx}][${this.state.outputIdx}]`}
-          <canvas
-            ref={this.weightRef}
-            width="200"
-            height="200"
-            style={{ margin: '10px' }}
-          />
+          <TensorCanvas reference={this.weightRef} size={200} margin={10} />
         </div>
         {this.makeSelector('output')}
       </div>

@@ -162,3 +162,29 @@ export const writeBase64ToCanvas = (
   image.onload = () => ctx.drawImage(image, 0, 0, size, size);
   image.src = 'data:image/jpeg;base64,' + data;
 };
+
+export const drawArrow = (canvas: HTMLCanvasElement) => {
+  const ctx = canvas.getContext('2d')!;
+  ctx.beginPath();
+  ctx.rect(20, 0, 40, 40);
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.moveTo(0, 40);
+  ctx.lineTo(80, 40);
+  ctx.lineTo(40, 80);
+  ctx.fill();
+};
+
+export const layerRootStyle: React.CSSProperties = {
+  padding: '5px',
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'row',
+};
+
+export const layerThinDivStyle: React.CSSProperties = {
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+};

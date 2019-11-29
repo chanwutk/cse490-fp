@@ -2,7 +2,14 @@ import React from 'react';
 import './App.css';
 import NetworkVisualization from './components/NetworkVisualization';
 import UploadButton from './components/UploadButton';
-import { CANVAS_MAX_WIDTH, makeRequest, parseNetworkLayout } from './utils';
+import {
+  CANVAS_MAX_WIDTH,
+  makeRequest,
+  parseNetworkLayout,
+  layerThinDivStyle,
+  drawArrow,
+  layerRootStyle,
+} from './utils';
 
 const rootStyle: React.CSSProperties = {
   width: '100%',
@@ -16,6 +23,7 @@ const bodyStyle: React.CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
   width: CANVAS_MAX_WIDTH + 'px',
+  justifyContent: 'center',
 };
 
 interface AppState {
@@ -32,13 +40,14 @@ class App extends React.Component<{}, AppState> {
     visualizationInfo: [],
   };
 
-  canvasRef: React.RefObject<HTMLCanvasElement> = React.createRef();
+  pictureRef: React.RefObject<HTMLCanvasElement> = React.createRef();
+  lastArrowRef: React.RefObject<HTMLCanvasElement> = React.createRef();
 
   handleFileUpload = (event: any) => {
     const file = event.target.files[0];
     const src = URL.createObjectURL(file);
     const image = new Image();
-    const canvas = this.canvasRef.current!;
+    const canvas = this.pictureRef.current!;
     image.src = src;
     image.onload = () => {
       const ctx = canvas.getContext('2d')!;
@@ -65,11 +74,14 @@ class App extends React.Component<{}, AppState> {
       parseNetworkLayout
     );
 
-    this.setState({
+    await this.setState({
       visualizationInfo,
       output,
       isUploadButtonActive: true,
+      imageData: data,
     });
+
+    drawArrow(this.lastArrowRef.current!);
   };
 
   render() {
@@ -82,7 +94,7 @@ class App extends React.Component<{}, AppState> {
             <canvas
               width="224px"
               height="224px"
-              ref={this.canvasRef}
+              ref={this.pictureRef}
               style={{ borderStyle: 'dotted', padding: '2px' }}
             />
           </div>
@@ -101,8 +113,27 @@ class App extends React.Component<{}, AppState> {
           </div>
           <NetworkVisualization
             visualizationInfo={this.state.visualizationInfo}
+            imageData={this.state.imageData}
           />
-          <div>{this.state.output ? this.state.output : ''}</div>
+          {this.state.output ? (
+            <div style={layerRootStyle}>
+              <div
+                style={{
+                  justifyContent: 'right',
+                  ...layerThinDivStyle,
+                }}
+              >
+                <div style={{ marginRight: '10px' }}>Classification Layers</div>
+              </div>
+              <canvas ref={this.lastArrowRef} width="80" height="80" />
+              <div style={layerThinDivStyle} />
+            </div>
+          ) : null}
+          <div
+            style={{ display: 'flex', justifyContent: 'center', fontSize: 50 }}
+          >
+            {this.state.output ? `This picture is ${this.state.output}!` : ''}
+          </div>
         </div>
       </div>
     );

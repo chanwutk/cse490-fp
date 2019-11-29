@@ -2,10 +2,11 @@ import React from 'react';
 import { Fab } from '@material-ui/core';
 import { ArrowUpward, ArrowDownward } from '@material-ui/icons';
 import { writeBase64ToCanvas } from '../utils';
+import TensorCanvas from './TensorCanvas';
 
 interface PopupContentNoWeightProps {
-  input: any[];
-  output: any[];
+  input: string[];
+  output: string[];
   isOpen: boolean;
   info: LayerInfo;
 }
@@ -75,19 +76,14 @@ class PopupContentNoWeight extends React.Component<
 
   changeIndexFactory = (direction: 1 | -1) => {
     return () => {
-      this.setState({ idx: this.state.idx + direction } as any);
+      this.setState({ idx: this.state.idx + direction });
     };
   };
 
   render() {
     return (
       <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <canvas
-          ref={this.inputRef}
-          width="300"
-          height="300"
-          style={{ margin: '30px' }}
-        />
+        <TensorCanvas reference={this.inputRef} size={300} margin={30} />
         <div
           style={{
             display: 'flex',
@@ -112,12 +108,7 @@ class PopupContentNoWeight extends React.Component<
             <ArrowDownward />
           </Fab>
         </div>
-        <canvas
-          ref={this.outputRef}
-          width="300"
-          height="300"
-          style={{ margin: '30px' }}
-        />
+        <TensorCanvas reference={this.outputRef} size={300} margin={30} />
       </div>
     );
   }

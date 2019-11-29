@@ -11,9 +11,13 @@ import LayerVisualization from './LayerVisualization';
 
 interface NetworkVisualizationProps {
   visualizationInfo: VisualizationInfo[];
+  imageData?: string;
 }
 
-export const makeVisualization = (layers: VisualizationInfo[]) => {
+export const makeVisualization = (
+  layers: VisualizationInfo[],
+  imageData?: string
+) => {
   const { scaleWidth, scaleHeight } = getLayersScalers(layers);
 
   let idx = 0;
@@ -32,7 +36,14 @@ export const makeVisualization = (layers: VisualizationInfo[]) => {
       isMaxPoolLayerInfo(layer) ||
       isActivationLayerInfo(layer)
     ) {
-      return <LayerVisualization key={key} info={layer} idx={idx++} />;
+      return (
+        <LayerVisualization
+          key={key}
+          info={layer}
+          idx={idx++}
+          imageData={imageData}
+        />
+      );
     } else {
       throw new Error('Unexpected layer: ' + layer);
     }
@@ -41,6 +52,7 @@ export const makeVisualization = (layers: VisualizationInfo[]) => {
 
 const NetworkVisualization: React.FC<NetworkVisualizationProps> = ({
   visualizationInfo,
+  imageData,
 }) => {
   return (
     <div
@@ -53,7 +65,7 @@ const NetworkVisualization: React.FC<NetworkVisualizationProps> = ({
         alignItems: 'center',
       }}
     >
-      {makeVisualization(visualizationInfo)}
+      {makeVisualization(visualizationInfo, imageData)}
     </div>
   );
 };

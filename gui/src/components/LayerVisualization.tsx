@@ -1,5 +1,10 @@
 import React from 'react';
-import { makeRequest } from '../utils';
+import {
+  makeRequest,
+  drawArrow,
+  layerRootStyle,
+  layerThinDivStyle,
+} from '../utils';
 import {
   Fab,
   Dialog,
@@ -13,19 +18,6 @@ import PopupContentWithWeight from './PopupContentWithWeight';
 import PopupContentNoWeight from './PopupContentNoWeight';
 import { Styles } from '@material-ui/styles/withStyles';
 import CloseIcon from '@material-ui/icons/Close';
-
-const rootStyle: React.CSSProperties = {
-  padding: '5px',
-  display: 'flex',
-  alignItems: 'center',
-  flexDirection: 'row',
-};
-
-const thinDivStyle: React.CSSProperties = {
-  width: '100%',
-  display: 'flex',
-  alignItems: 'center',
-};
 
 const styles: Styles<Theme, {}, 'root' | 'closeButton'> = (theme: Theme) => ({
   root: {
@@ -59,14 +51,15 @@ const DialogTitle = withStyles(styles)((props: any) => {
 interface LayerVisualizationProps {
   info: LayerInfo;
   idx: number;
+  imageData?: string;
 }
 
 interface LayerVisualizationState {
   isReady: boolean;
   isPopupOpen: boolean;
-  input?: any;
-  weights?: any;
-  output?: any;
+  input?: string[];
+  weights?: string[][];
+  output?: string[];
 }
 
 class LayerVisualization extends React.Component<
@@ -81,18 +74,14 @@ class LayerVisualization extends React.Component<
     this.canvas = React.createRef();
   }
 
-  componentDidMount() {
-    const canvas = this.canvas.current!;
-    const ctx = canvas.getContext('2d')!;
-    ctx.beginPath();
-    ctx.rect(20, 0, 40, 40);
-    ctx.fill();
+  componentDidUpdate(prevProps: LayerVisualizationProps) {
+    if (prevProps.imageData !== this.props.imageData) {
+      this.setState({ isReady: false });
+    }
+  }
 
-    ctx.beginPath();
-    ctx.moveTo(0, 40);
-    ctx.lineTo(80, 40);
-    ctx.lineTo(40, 80);
-    ctx.fill();
+  componentDidMount() {
+    drawArrow(this.canvas.current!);
   }
 
   onClick = async () => {
@@ -116,20 +105,27 @@ class LayerVisualization extends React.Component<
     });
   };
 
+  commonPopupProps = () => {
+    return {
+      input: this.state.input!,
+      output: this.state.output!,
+      isOpen: this.state.isPopupOpen,
+      info: this.props.info,
+    };
+  };
+
   render() {
     return (
-      <div style={rootStyle}>
-        <div style={{ justifyContent: 'right', ...thinDivStyle }}>
+      <div style={layerRootStyle}>
+        <div style={{ justifyContent: 'right', ...layerThinDivStyle }}>
           <div style={{ marginRight: '10px' }}>{this.props.info.str}</div>
         </div>
         <canvas ref={this.canvas} width="80" height="80" />
-        <div style={thinDivStyle}>
+        <div style={layerThinDivStyle}>
           <Fab
             variant="extended"
-            color="primary"
-            style={{
-              left: '10px',
-            }}
+            color={this.props.info.type === 'Conv2d' ? 'secondary' : 'primary'}
+            style={{ left: '10px' }}
             onClick={this.onClick}
           >
             Trace this Layer!
@@ -148,19 +144,11 @@ class LayerVisualization extends React.Component<
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               {this.props.info.type === 'Conv2d' ? (
                 <PopupContentWithWeight
-                  input={this.state.input}
-                  output={this.state.output}
-                  weights={this.state.weights}
-                  isOpen={this.state.isPopupOpen}
-                  info={this.props.info}
+                  weights={this.state.weights!}
+                  {...this.commonPopupProps()}
                 />
               ) : (
-                <PopupContentNoWeight
-                  input={this.state.input}
-                  output={this.state.output}
-                  isOpen={this.state.isPopupOpen}
-                  info={this.props.info}
-                />
+                <PopupContentNoWeight {...this.commonPopupProps()} />
               )}
             </div>
           </Dialog>
