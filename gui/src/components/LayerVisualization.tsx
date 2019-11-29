@@ -1,7 +1,18 @@
 import React from 'react';
 import { makeRequest } from '../utils';
-import { Fab } from '@material-ui/core';
-import LayerTracePopup from './LayerTracePopup';
+import {
+  Fab,
+  Dialog,
+  Theme,
+  withStyles,
+  Typography,
+  IconButton,
+} from '@material-ui/core';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import PopupContentWithWeight from './PopupContentWithWeight';
+import PopupContentNoWeight from './PopupContentNoWeight';
+import { Styles } from '@material-ui/styles/withStyles';
+import CloseIcon from '@material-ui/icons/Close';
 
 const rootStyle: React.CSSProperties = {
   padding: '5px',
@@ -11,13 +22,42 @@ const rootStyle: React.CSSProperties = {
 };
 
 const thinDivStyle: React.CSSProperties = {
-  width: '0px',
+  width: '100%',
   display: 'flex',
   alignItems: 'center',
 };
 
+const styles: Styles<Theme, {}, 'root' | 'closeButton'> = (theme: Theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+});
+
+const DialogTitle = withStyles(styles)((props: any) => {
+  const { children, classes, onClose, ...other } = props;
+  return (
+    <MuiDialogTitle disableTypography className={classes.root} {...other}>
+      <Typography variant="h6">{children}</Typography>
+      <IconButton
+        aria-label="close"
+        className={classes.closeButton}
+        onClick={onClose}
+      >
+        <CloseIcon />
+      </IconButton>
+    </MuiDialogTitle>
+  );
+});
+
 interface LayerVisualizationProps {
-  info: ConvolutionLayerInfo;
+  info: LayerInfo;
   idx: number;
 }
 
@@ -80,7 +120,7 @@ class LayerVisualization extends React.Component<
     return (
       <div style={rootStyle}>
         <div style={{ justifyContent: 'right', ...thinDivStyle }}>
-          <div style={{ marginRight: '10px' }}>{this.props.info.type}</div>
+          <div style={{ marginRight: '10px' }}>{this.props.info.str}</div>
         </div>
         <canvas ref={this.canvas} width="80" height="80" />
         <div style={thinDivStyle}>
@@ -89,22 +129,41 @@ class LayerVisualization extends React.Component<
             color="primary"
             style={{
               left: '10px',
-              paddingLeft: '65px',
-              paddingRight: '65px',
             }}
             onClick={this.onClick}
           >
-            Visualize!
+            Trace this Layer!
           </Fab>
         </div>
         {this.state.isReady ? (
-          <LayerTracePopup
-            input={this.state.input}
-            output={this.state.output}
-            weights={this.state.weights}
-            isOpen={this.state.isPopupOpen}
+          <Dialog
             onClose={this.closePopup}
-          />
+            aria-labelledby="customized-dialog-title"
+            open={this.state.isPopupOpen}
+            maxWidth="lg"
+          >
+            <DialogTitle id="customized-dialog-title" onClose={this.closePopup}>
+              {this.props.info.str}
+            </DialogTitle>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              {this.props.info.type === 'Conv2d' ? (
+                <PopupContentWithWeight
+                  input={this.state.input}
+                  output={this.state.output}
+                  weights={this.state.weights}
+                  isOpen={this.state.isPopupOpen}
+                  info={this.props.info}
+                />
+              ) : (
+                <PopupContentNoWeight
+                  input={this.state.input}
+                  output={this.state.output}
+                  isOpen={this.state.isPopupOpen}
+                  info={this.props.info}
+                />
+              )}
+            </div>
+          </Dialog>
         ) : null}
       </div>
     );

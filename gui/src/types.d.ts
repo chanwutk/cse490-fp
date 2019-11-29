@@ -1,5 +1,6 @@
 interface LayerInfo {
   readonly type: string;
+  readonly str: string;
 }
 
 interface ConvolutionLayerInfo extends LayerInfo {

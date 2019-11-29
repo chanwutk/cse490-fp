@@ -150,3 +150,15 @@ export const getLayersScalers = (layers: VisualizationInfo[]) => {
     scaleHeight,
   };
 };
+
+export const writeBase64ToCanvas = (
+  canvas: HTMLCanvasElement,
+  data: string,
+  size: number
+) => {
+  const ctx = canvas.getContext('2d')!;
+  ctx.imageSmoothingEnabled = false;
+  const image = new Image();
+  image.onload = () => ctx.drawImage(image, 0, 0, size, size);
+  image.src = 'data:image/jpeg;base64,' + data;
+};

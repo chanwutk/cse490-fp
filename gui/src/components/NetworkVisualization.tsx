@@ -7,9 +7,7 @@ import {
   isMaxPoolLayerInfo,
 } from '../utils';
 import TensorVisualization from './TensorVisualization';
-import ActivationVisualization from './ActivationVisualization';
 import LayerVisualization from './LayerVisualization';
-import MaxPool2dVisualization from './MaxPool2dVisualization';
 
 interface NetworkVisualizationProps {
   visualizationInfo: VisualizationInfo[];
@@ -19,7 +17,7 @@ export const makeVisualization = (layers: VisualizationInfo[]) => {
   const { scaleWidth, scaleHeight } = getLayersScalers(layers);
 
   let idx = 0;
-  layers = layers.map((layer: VisualizationInfo, key: number) => {
+  return layers.map((layer: VisualizationInfo, key: number) => {
     if (isTensorInfo(layer)) {
       return (
         <TensorVisualization
@@ -29,17 +27,16 @@ export const makeVisualization = (layers: VisualizationInfo[]) => {
           height={scaleHeight(layer.channel)}
         />
       );
-    } else if (isConvolutionLayerInfo(layer)) {
+    } else if (
+      isConvolutionLayerInfo(layer) ||
+      isMaxPoolLayerInfo(layer) ||
+      isActivationLayerInfo(layer)
+    ) {
       return <LayerVisualization key={key} info={layer} idx={idx++} />;
-    } else if (isMaxPoolLayerInfo(layer)) {
-      return <MaxPool2dVisualization key={key} info={layer} idx={idx++} />;
-    } else if (isActivationLayerInfo(layer)) {
-      return <ActivationVisualization key={key} info={layer} idx={idx++} />;
     } else {
       throw new Error('Unexpected layer: ' + layer);
     }
   });
-  return layers;
 };
 
 const NetworkVisualization: React.FC<NetworkVisualizationProps> = ({
