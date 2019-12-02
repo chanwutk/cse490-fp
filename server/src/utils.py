@@ -1,10 +1,6 @@
 import torch
 import base64
 import io
-import numpy as np
-# from numba import njit, prange
-import time
-
 
 from torchvision.transforms import functional as TF
 
@@ -42,17 +38,6 @@ def normalize_tensor(tensor):
         return torch.zeros(tensor.size())
 
 
-# @njit(parallel=True, cache=True)
-# def normalize_ndarray(array):
-#     array = array.astype(np.float32)
-#     min_value = array.min()
-#     range_value = array.max() - min_value
-#     if range_value > 0:
-#         return (array - min_value) / range_value
-#     else:
-#         return np.zeros(array.shape, dtype=np.float32)
-
-
 def pil_to_base64(pil_image):
     byte_buffer = io.BytesIO()
     pil_image.save(byte_buffer, format="JPEG")
@@ -71,28 +56,6 @@ def tensor_to_base64s(tensor):
         image = TF.to_pil_image(normalize_tensor(tensor[i, :, :].squeeze(dim=0)))
         base64s.append(pil_to_base64(image))
     return base64s
-    # normalized = ndarray_to_normalized(tensor.numpy())
-    # base64s = [None for _ in range(len(normalized))]
-    # for channel in normalized:
-    #     image = TF.to_pil_image(channel)
-    #     base64s.append(pil_to_base64(image))
-    # return base64s
-
-
-# @njit(parallel=True, cache=True)
-# def ndarray_to_normalized(array):
-#     normalized = np.zeros((array.shape[1], array.shape[2], array.shape[3]), dtype=np.float32)
-#     channel = np.zeros((array.shape[2], array.shape[3]), dtype=np.float32)
-#     for i in prange(array.shape[1]):
-#         for y in prange(channel.shape[0]):
-#             for x in prange(channel.shape[1]):
-#                 channel[y][x] = array[0, i, y, x]
-#         channel = normalize_ndarray(channel)
-#         for y in prange(channel.shape[0]):
-#             for x in prange(channel.shape[1]):
-#                 normalized[i][y][x] =channel[y][x]
-#
-#     return normalized
 
 
 def weights_to_base64s(weights):
