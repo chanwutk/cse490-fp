@@ -31,6 +31,7 @@ class PopupContentWithWeight extends React.Component<
   weightRef: React.RefObject<HTMLCanvasElement> = React.createRef();
 
   componentDidMount() {
+    // TODO: fix this hack
     setTimeout(() => this.rewriteCanvas(null, null), 100);
   }
 
@@ -39,6 +40,7 @@ class PopupContentWithWeight extends React.Component<
     prevState: PopupContentWithWeightState
   ) {
     if (!prevProps.isOpen && this.props.isOpen) {
+      // TODO: fix this hack
       setTimeout(() => this.rewriteCanvas(prevProps, prevState), 100);
     } else {
       this.rewriteCanvas(null, null);

@@ -88,8 +88,14 @@ class App extends React.Component<{}, AppState> {
     return (
       <div style={rootStyle}>
         <div style={bodyStyle}>
-          {/* <h1 style={h1Style}>Rose is red; violet is blue;<br/>Which parts activate your ReLU</h1> */}
-          <h1 style={{ fontSize: '40px' }}>What makes a flower its kind?</h1>
+          <div style={{ marginBottom: 40 }}>
+            <h1 style={{ fontSize: '40px', marginBottom: 0 }}>
+              What makes a flower its kind?
+            </h1>
+            <p style={{ marginTop: 5 }}>
+              Rose is red; violet is blue; Which pixels activate your ReLU
+            </p>
+          </div>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <canvas
               width="224px"
@@ -130,7 +136,12 @@ class App extends React.Component<{}, AppState> {
             </div>
           ) : null}
           <div
-            style={{ display: 'flex', justifyContent: 'center', fontSize: 50 }}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              fontSize: 50,
+              marginBottom: 250,
+            }}
           >
             {this.state.output ? `This picture is ${this.state.output}!` : ''}
           </div>

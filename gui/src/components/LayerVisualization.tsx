@@ -17,6 +17,7 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import PopupContentWithWeight from './PopupContentWithWeight';
 import PopupContentNoWeight from './PopupContentNoWeight';
 import { Styles } from '@material-ui/styles/withStyles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import CloseIcon from '@material-ui/icons/Close';
 
 const styles: Styles<Theme, {}, 'root' | 'closeButton'> = (theme: Theme) => ({
@@ -86,10 +87,10 @@ class LayerVisualization extends React.Component<
 
   onClick = async () => {
     if (!this.state.isReady) {
+      await this.setState({ isPopupOpen: true });
       const result = await makeRequest(`trace/${this.props.idx}`, JSON.parse);
       this.setState({
         isReady: true,
-        isPopupOpen: true,
         ...result,
       });
     } else {
@@ -131,28 +132,36 @@ class LayerVisualization extends React.Component<
             Trace this Layer!
           </Fab>
         </div>
-        {this.state.isReady ? (
-          <Dialog
-            onClose={this.closePopup}
-            aria-labelledby="customized-dialog-title"
-            open={this.state.isPopupOpen}
-            maxWidth="lg"
-          >
-            <DialogTitle id="customized-dialog-title" onClose={this.closePopup}>
-              {this.props.info.str}
-            </DialogTitle>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-              {this.props.info.type === 'Conv2d' ? (
+        <Dialog
+          onClose={this.closePopup}
+          aria-labelledby="customized-dialog-title"
+          open={this.state.isPopupOpen}
+          maxWidth="lg"
+        >
+          <DialogTitle id="customized-dialog-title" onClose={this.closePopup}>
+            {this.props.info.str}
+          </DialogTitle>
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            {this.state.isReady ? (
+              this.props.info.type === 'Conv2d' ? (
                 <PopupContentWithWeight
                   weights={this.state.weights!}
                   {...this.commonPopupProps()}
                 />
               ) : (
                 <PopupContentNoWeight {...this.commonPopupProps()} />
-              )}
-            </div>
-          </Dialog>
-        ) : null}
+              )
+            ) : (
+              <div>
+                <CircularProgress
+                  style={{
+                    margin: '20px 350px 20px 350px',
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        </Dialog>
       </div>
     );
   }

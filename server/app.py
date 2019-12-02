@@ -1,15 +1,11 @@
 import os
-import shutil
 import re
 
-
 from src.utils import to_layer_info, tensor_to_base64s, weights_to_base64s
-from src.visualizable_net import TraceableAlexNet
+from src.visualizable_net import TraceableAlexNet, TraceableVgg
 from src.data_loaders import load_base64_image, load_classes
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
-
-REACT_DATA_DIR = "../gui/data"
 
 app = Flask(__name__)
 app.config["CORS_HEADERS"] = "Content-Type"
@@ -23,12 +19,17 @@ cors = CORS(
 )
 
 cwd = os.getcwd()
-visualizations_dir = os.path.join(cwd, "data/__visualizations__")
 weights_path = os.path.join(cwd, "data/weights.pt")
 
-model = TraceableAlexNet(num_classes=5, traceable=True)
-model.load_model(weights_path)
-class_names = load_classes()
+USE_ALEX = False
+
+if USE_ALEX:
+    model = TraceableAlexNet(num_classes=5, traceable=True)
+    model.load_model(weights_path)
+    class_names = load_classes("class_names.txt")
+else:
+    model = TraceableVgg(traceable=True, pretrained=True)
+    class_names = load_classes("class_names_imagenet.txt")
 
 
 @app.route("/classify", methods=["POST"])
@@ -38,7 +39,7 @@ def classify():
         return "/classify only accept POST request", 500
 
     data = re.sub("^data:image/.+;base64,", "", request.json["data"])
-    image = load_base64_image(data)
+    image = load_base64_image(data, do_normalize=USE_ALEX)
     output = model.classify(image)
     class_idx = output.view(-1).max(0)[1]
     return class_names[class_idx.item()]
@@ -69,7 +70,4 @@ def network_layout():
 
 
 if __name__ == "__main__":
-    if os.path.exists(visualizations_dir):
-        shutil.rmtree(visualizations_dir)
-    os.mkdir(visualizations_dir)
     app.run(port=5432)

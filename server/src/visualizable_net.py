@@ -21,7 +21,7 @@ class TraceableSequential(nn.Sequential):
             if self.traceable:
                 module_output = input_tensor.detach()
                 weight = None
-                if hasattr(module, "weight"):
+                if hasattr(module, "weight") and len(module.weight.size()) == 4:
                     weight = module.weight.detach()
                 self.traces.append((module_input, module_output, module, weight))
         return input_tensor
@@ -63,8 +63,15 @@ class BaseSavableNet(nn.Module):
         return pt_util.restore_latest(self, dir_path)
 
 
-def make_traceable_net(net_builder, num_classes, traceable):
-    net = net_builder(num_classes=num_classes)
+def make_traceable_net(net_builder, traceable, num_classes, pretrained):
+    if not pretrained:
+        if num_classes is None:
+            raise Exception(
+                "num_classes should not be None if not using pretrained network"
+            )
+        net = net_builder(num_classes=num_classes)
+    else:
+        net = net_builder(pretrained=pretrained)
     net.features = TraceableSequential(
         list(net.features.modules())[1:], traceable=traceable
     )
@@ -72,11 +79,14 @@ def make_traceable_net(net_builder, num_classes, traceable):
 
 
 class TraceableAlexNet(BaseSavableNet):
-    def __init__(self, num_classes, traceable=False):
+    def __init__(self, num_classes=None, traceable=False, pretrained=False):
         super(TraceableAlexNet, self).__init__()
         self.traceable = traceable
         self.alexnet = make_traceable_net(
-            models.alexnet, num_classes=num_classes, traceable=traceable
+            models.alexnet,
+            traceable=traceable,
+            num_classes=num_classes,
+            pretrained=pretrained,
         )
 
     def forward(self, input_tensor):
@@ -94,11 +104,14 @@ class TraceableAlexNet(BaseSavableNet):
 
 
 class TraceableVgg(BaseSavableNet):
-    def __init__(self, num_classes, traceable=False):
+    def __init__(self, num_classes=None, traceable=False, pretrained=False):
         super(TraceableVgg, self).__init__()
         self.traceable = traceable
         self.vgg = make_traceable_net(
-            models.vgg19_bn, num_classes=num_classes, traceable=traceable
+            models.vgg19_bn,
+            traceable=traceable,
+            num_classes=num_classes,
+            pretrained=pretrained,
         )
 
     def forward(self, input_tensor):
