@@ -9,3 +9,4 @@ torchvision
 h5py
 Flask
 flask-cors
+numba

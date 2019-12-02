@@ -21,7 +21,7 @@ cors = CORS(
 cwd = os.getcwd()
 weights_path = os.path.join(cwd, "data/weights.pt")
 
-USE_ALEX = False
+USE_ALEX = True
 
 if USE_ALEX:
     model = TraceableAlexNet(num_classes=5, traceable=True)
