@@ -102,6 +102,7 @@ class PopupContentWithWeight extends React.Component<
   makeSelector = (tensor: 'input' | 'output') => {
     const field = (tensor + 'Idx') as 'inputIdx' | 'outputIdx';
     const ref = (tensor + 'Ref') as 'inputRef' | 'outputRef';
+    const style = { margin: 20 };
 
     return (
       <div
@@ -114,15 +115,17 @@ class PopupContentWithWeight extends React.Component<
         <Fab
           disabled={this.state[field] <= 0}
           onClick={this.changeIndexFactory(tensor, -1)}
-          style={{ marginTop: '20px' }}
+          style={style}
         >
           <ArrowUpward />
         </Fab>
-        <TensorCanvas reference={this[ref]} size={300} margin={30} />
+        {tensor}
+        <TensorCanvas reference={this[ref]} size={300} margin={10} />
+        {`Channel: ${this.state[field]}`}
         <Fab
           disabled={this.state[field] >= this.props[tensor].length - 1}
           onClick={this.changeIndexFactory(tensor, 1)}
-          style={{ marginBottom: '20px' }}
+          style={style}
         >
           <ArrowDownward />
         </Fab>
