@@ -1,15 +1,15 @@
 import React from 'react';
 import { Fab } from '@material-ui/core';
 import { ArrowUpward, ArrowDownward } from '@material-ui/icons';
-import { writeBase64ToCanvas } from '../utils';
+import { writeBase64ToCanvas, makeRequest } from '../utils';
 import TensorCanvas from './TensorCanvas';
 
 interface PopupContentWithWeightProps {
   input: string[];
   output: string[];
-  weights: string[][];
   isOpen: boolean;
   info: LayerInfo;
+  idx: number;
 }
 
 interface PopupContentWithWeightState {
@@ -53,8 +53,10 @@ class PopupContentWithWeight extends React.Component<
     data: string
   ) => {
     const ref = (tensor + 'Ref') as 'inputRef' | 'outputRef' | 'weightRef';
-    const canvas = this[ref].current!;
-    writeBase64ToCanvas(canvas, data, size);
+    const canvas = this[ref].current;
+    if (canvas !== null) {
+      writeBase64ToCanvas(canvas, data, size);
+    }
   };
 
   rewriteCanvas = (
@@ -84,10 +86,15 @@ class PopupContentWithWeight extends React.Component<
       }
 
       if (toUpdateInputCanvas || toUpdateOutputCanvas) {
-        const data = this.props.weights[this.state.outputIdx][
-          this.state.inputIdx
-        ];
-        this.writeToCanvas('weight', 200, data);
+        (async () => {
+          const {
+            weight: { data },
+          } = await makeRequest(
+            `trace-only-weight/${this.props.idx}/${this.state.inputIdx}/${this.state.outputIdx}`,
+            JSON.parse
+          );
+          this.writeToCanvas('weight', 200, data);
+        })();
       }
     }
   };

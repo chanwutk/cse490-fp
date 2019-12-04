@@ -30,8 +30,9 @@ def to_layer_info(trace):
 
 def normalize_tensor(tensor):
     tensor = tensor.float()
-    min_value = torch.min(tensor)
-    range_value = torch.max(tensor) - min_value
+    min_value = torch.min(tensor).item()
+    max_value = torch.max(tensor).item()
+    range_value = max_value - min_value
     if range_value > 0:
         return (tensor - min_value) / range_value
     else:
@@ -53,7 +54,8 @@ def tensor_to_base64s(tensor):
     base64s = []
     tensor = tensor.squeeze(dim=0)
     for i in range(tensor.size()[0]):
-        image = TF.to_pil_image(normalize_tensor(tensor[i, :, :].squeeze(dim=0)))
+        normalized = normalize_tensor(tensor[i, :, :].squeeze(dim=0))
+        image = TF.to_pil_image(normalized)
         base64s.append(pil_to_base64(image))
     return base64s
 
@@ -62,9 +64,24 @@ def weights_to_base64s(weights):
     base64s = [None] * weights.size()[0]
     for i in range(weights.size()[0]):
         base64s[i] = [None] * weights.size()[1]
-    for wo in range(weights.size()[1]):
-        out_kernels = normalize_tensor(weights[:, wo, :, :].squeeze(dim=1))
-        for wi in range(weights.size()[0]):
-            image = TF.to_pil_image(out_kernels[wi, :, :].squeeze(dim=0))
-            base64s[wi][wo] = pil_to_base64(image)
+    for wo in range(weights.size()[0]):
+        out_kernels = weights[wo, :, :, :].squeeze(dim=0)
+        normalized = normalize_tensor(out_kernels)
+        for wi in range(weights.size()[1]):
+            kernel_normalized = normalized[wi, :, :].squeeze(dim=0)
+            image = TF.to_pil_image(kernel_normalized)
+            base64s[wo][wi] = {
+                "data": pil_to_base64(image),
+            }
     return base64s
+
+
+def weight_to_base64(weights, wi: int, wo: int):
+    out_kernels = weights[wo, :, :, :].squeeze(dim=0)
+    normalized = normalize_tensor(out_kernels)
+
+    kernel_normalized = normalized[wi, :, :].squeeze(dim=0)
+    image = TF.to_pil_image(kernel_normalized)
+    return {
+        "data": pil_to_base64(image),
+    }

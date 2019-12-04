@@ -25,4 +25,10 @@ interface TensorInfo {
   readonly channel: number;
 }
 
+interface WeightData {
+  readonly data: string;
+  readonly min: number;
+  readonly max: number;
+}
+
 type VisualizationInfo = LayerInfo | TensorInfo;

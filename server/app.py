@@ -1,7 +1,12 @@
 import os
 import re
 
-from src.utils import to_layer_info, tensor_to_base64s, weights_to_base64s
+from src.utils import (
+    to_layer_info,
+    tensor_to_base64s,
+    weights_to_base64s,
+    weight_to_base64,
+)
 from src.visualizable_net import TraceableAlexNet, TraceableVgg
 from src.data_loaders import load_base64_image, load_classes
 from flask import Flask, request, jsonify
@@ -15,13 +20,15 @@ cors = CORS(
         r"/classify": {"origins": "*"},
         r"/network-layout": {"origins": "*"},
         r"/trace": {"origins": "*"},
+        r"/trace-without-weight": {"origins": "*"},
+        r"/trace-only-weight": {"origins": "*"},
     },
 )
 
 cwd = os.getcwd()
 weights_path = os.path.join(cwd, "data/weights.pt")
 
-USE_ALEX = True
+USE_ALEX = False
 
 if USE_ALEX:
     model = TraceableAlexNet(num_classes=5, traceable=True)
@@ -47,18 +54,49 @@ def classify():
 
 @app.route("/trace/<int:layer_idx>", methods=["GET"])
 @cross_origin(origin="localhost", headers=["Content-Type"])
-def get_vis(layer_idx: int):
+def get_trace(layer_idx: int):
     traces = model.get_traces()
     if len(traces) <= layer_idx:
         return "index out of bound for traces", 500
 
-    input_tensor, output_tensor, layer, weights = traces[layer_idx]
+    input_tensor, output_tensor, _, weights = traces[layer_idx]
     output = {
         "input": tensor_to_base64s(input_tensor),
         "output": tensor_to_base64s(output_tensor),
     }
     if weights is not None:
         output["weights"] = weights_to_base64s(weights)
+
+    return jsonify(output)
+
+
+@app.route("/trace-without-weight/<int:layer_idx>", methods=["GET"])
+@cross_origin(origin="localhost", headers=["Content-Type"])
+def get_trace_without_weight(layer_idx: int):
+    traces = model.get_traces()
+    if len(traces) <= layer_idx:
+        return "index out of bound for traces", 500
+
+    input_tensor, output_tensor, _, _ = traces[layer_idx]
+    output = {
+        "input": tensor_to_base64s(input_tensor),
+        "output": tensor_to_base64s(output_tensor),
+    }
+
+    return jsonify(output)
+
+
+@app.route(
+    "/trace-only-weight/<int:layer_idx>/<int:in_idx>/<int:out_idx>", methods=["GET"]
+)
+@cross_origin(origin="localhost", headers=["Content-Type"])
+def get_trace_only_weight(layer_idx: int, in_idx: int, out_idx: int):
+    traces = model.get_traces()
+    if len(traces) <= layer_idx:
+        return "index out of bound for traces", 500
+
+    _, _, _, weights = traces[layer_idx]
+    output = {"weight": weight_to_base64(weights, in_idx, out_idx)}
 
     return jsonify(output)
 

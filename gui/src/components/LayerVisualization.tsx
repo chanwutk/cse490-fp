@@ -59,7 +59,6 @@ interface LayerVisualizationState {
   isReady: boolean;
   isPopupOpen: boolean;
   input?: string[];
-  weights?: string[][];
   output?: string[];
 }
 
@@ -88,7 +87,10 @@ class LayerVisualization extends React.Component<
   onClick = async () => {
     if (!this.state.isReady) {
       await this.setState({ isPopupOpen: true });
-      const result = await makeRequest(`trace/${this.props.idx}`, JSON.parse);
+      const result = await makeRequest(
+        `trace-without-weight/${this.props.idx}`,
+        JSON.parse
+      );
       this.setState({
         isReady: true,
         ...result,
@@ -145,7 +147,7 @@ class LayerVisualization extends React.Component<
             {this.state.isReady ? (
               this.props.info.type === 'Conv2d' ? (
                 <PopupContentWithWeight
-                  weights={this.state.weights!}
+                  idx={this.props.idx}
                   {...this.commonPopupProps()}
                 />
               ) : (
