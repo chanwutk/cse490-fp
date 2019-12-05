@@ -19,3 +19,8 @@ yarn
 yarn build
 yarn serve -s build
 ```
+
+## Documentation
+
+- Final [Report](https://docs.google.com/document/d/1Usl9NSnAzShD-16hTYAjizvhCcxkP2-sXK6lsB1-2IQ/edit?usp=sharing)
+- Project [Poster](./poster/poster.pdf)
