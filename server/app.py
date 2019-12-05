@@ -7,10 +7,11 @@ from src.utils import (
     weights_to_base64s,
     weight_to_base64,
 )
-from src.visualizable_net import TraceableAlexNet, TraceableVgg
+from src.visualizable_net import TraceableAlexNet, TraceableVgg, GenericTraceableNet
 from src.data_loaders import load_base64_image, load_classes
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
+import torchvision.models as models
 
 app = Flask(__name__)
 app.config["CORS_HEADERS"] = "Content-Type"
@@ -28,14 +29,15 @@ cors = CORS(
 cwd = os.getcwd()
 weights_path = os.path.join(cwd, "data/weights.pt")
 
-USE_ALEX = False
+USE_ALEX = True
 
 if USE_ALEX:
     model = TraceableAlexNet(num_classes=5, traceable=True)
     model.load_model(weights_path)
     class_names = load_classes("class_names.txt")
 else:
-    model = TraceableVgg(traceable=True, pretrained=True)
+    vgg = models.vgg19_bn(pretrained=True)
+    model = GenericTraceableNet(net=vgg, seq_attr="features", traceable=True)
     class_names = load_classes("class_names_imagenet.txt")
 
 

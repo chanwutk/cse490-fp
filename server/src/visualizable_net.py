@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import src.pt_util as pt_util
@@ -10,7 +11,7 @@ class TraceableSequential(nn.Sequential):
         self.traceable = traceable
         self.traces = []
 
-    def forward(self, input_tensor):
+    def forward(self, input_tensor: torch.Tensor):
         if self.traceable:
             self.traces = []
         for module in self._modules.values():
@@ -29,7 +30,7 @@ class TraceableSequential(nn.Sequential):
     def get_traces(self):
         return self.traces
 
-    def set_traceable(self, traceable=True):
+    def set_traceable(self, traceable: bool = True):
         self.traceable = traceable
 
     def __str__(self):
@@ -41,7 +42,7 @@ class BaseSavableNet(nn.Module):
         super(BaseSavableNet, self).__init__()
         self.__best_accuracy_saved = None
 
-    def classify(self, input_tensor):
+    def classify(self, input_tensor: torch.Tensor):
         return F.softmax(self.forward(input_tensor), dim=1)
 
     def loss(self, prediction, label, reduction="mean"):
@@ -123,3 +124,28 @@ class TraceableVgg(BaseSavableNet):
 
     def get_traces(self):
         return self.vgg.features.get_traces()
+
+
+class GenericTraceableNet(BaseSavableNet):
+    def __init__(self, net: nn.Module, seq_attr: str, traceable: bool = False):
+        super(GenericTraceableNet, self).__init__()
+        if getattr(net, seq_attr).__class__.__name__ != "Sequential":
+            raise Exception("the attribute seq_attr of net should be Sequential")
+
+        traceable_seq = TraceableSequential(
+            list(getattr(net, seq_attr).modules())[1:], traceable=traceable
+        )
+        setattr(net, seq_attr, traceable_seq)
+        self.net = net
+        self.traceable = traceable
+        self.seq_attr = seq_attr
+
+    def forward(self, input_tensor: torch.Tensor):
+        return self.net(input_tensor)
+
+    def set_traceable(self, traceable: bool = True):
+        self.traceable = traceable
+        getattr(self.net, self.seq_attr).set_traceable(traceable)
+
+    def get_traces(self):
+        return getattr(self.net, self.seq_attr).get_traces()
