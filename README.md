@@ -12,14 +12,6 @@ python3 app.py
 
 2. Start the gui
 
-using `npm`:
-```
-cd gui
-npm install
-npm run build
-npm run serve -s build
-```
-
 using `yarn`:
 ```
 cd gui
